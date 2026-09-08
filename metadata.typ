@@ -7,8 +7,8 @@
   podnazev: "Návrh a realizace systému DarkFactory",
 
   autor: "Patrik Marius",
-  trida: "4.c",
-  vedouci: "Jméno vedoucího práce",
+  trida: "4.D",
+  vedouci: "Michal Dočekal",
   konzultant: none,
 
   skola: "Gymnázium J. K. Tyla",
