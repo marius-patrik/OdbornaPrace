@@ -1,3 +1,6 @@
+// TODO: Tento text je koncept vygenerovaný jako osnova. Před odevzdáním jej přepište
+// vlastními slovy — odevzdání cizího textu je plagiát (Průvodce, kap. 5.3).
+
 = Teoretická část
 
 Tato kapitola vymezuje pojmy, o které se opírá praktická část: řízení verzí,

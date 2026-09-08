@@ -4,6 +4,8 @@
 #show: odborna-prace.with(
   meta: meta,
   logo: "/img/logo.jpeg",
+  // Odstraňte, až bude text přepsán vlastními slovy.
+  koncept: "KONCEPT",
   // Volitelné úpravy dle požadavků školy:
   // pismo: "Times New Roman",
   // velikost: 12pt,

@@ -116,6 +116,8 @@
   meta: (:),
   // Cesta k logu školy, např. "/img/logo.jpeg". `none` = bez loga.
   logo: none,
+  // Vodoznak přes každou stranu, dokud je text rozpracovaný. `none` = hotová práce.
+  koncept: none,
   pismo: PISMO,
   velikost: 12pt,
   radkovani: 1.5,
@@ -136,6 +138,9 @@
     margin: (top: 2.5cm, bottom: 2.5cm, left: 3cm, right: 2.5cm),
     // Titulní strana a přední část se počítají, ale nečíslují.
     footer: none,
+    background: if koncept != none {
+      rotate(-45deg, text(size: 90pt, fill: rgb(0, 0, 0, 18), weight: "bold", koncept))
+    },
   )
 
   set text(font: pismo, size: velikost, lang: "cs", hyphenate: true)
