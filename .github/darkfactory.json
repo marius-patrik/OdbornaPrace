@@ -1,0 +1,85 @@
+{
+  "$comment": "Everything the shared pipeline needs and cannot detect. The pipeline itself is identical across every repository that uses it; this file is the only thing that differs.",
+  "identity": {
+    "owner": "marius-patrik",
+    "repo": "OdbornaPrace",
+    "display_name": "OdbornaPrace",
+    "default_branch": "main",
+    "description": "Odborná práce: autonomní pipeline pro vývoj softwaru (GJKT)",
+    "topics": [
+      "typst",
+      "thesis",
+      "odborna-prace",
+      "gjkt"
+    ]
+  },
+  "upstream": {
+    "$comment": "Consumer of the DarkFactory pipeline; pin to a commit SHA once the paper domain has landed upstream.",
+    "repo": "marius-patrik/DarkFactory",
+    "ref": null
+  },
+  "environment": {
+    "$comment": "Detection finds typst.toml on its own. The commands are declared because this repository vendors its fonts, so the build is not the ecosystem default; formatting is off because typstyle would reflow hand-set Czech typography.",
+    "testing": {
+      "typst": {
+        "command": "typst compile --font-path fonts main.typ out/prace.pdf"
+      }
+    },
+    "release": {
+      "typst": {
+        "command": "typst compile --font-path fonts main.typ out/prace.pdf"
+      }
+    },
+    "formatting": {
+      "typst": {
+        "enabled": false
+      }
+    }
+  },
+  "areas": {
+    "$default": "text",
+    "text": {
+      "description": "Kapitoly, anotace, formulace",
+      "keywords": [
+        "kapitola",
+        "text",
+        "anotace",
+        "uvod",
+        "zaver",
+        "formulace"
+      ]
+    },
+    "sazba": {
+      "description": "Šablona, rozvržení, písma, formální pravidla",
+      "keywords": [
+        "sazba",
+        "sablona",
+        "layout",
+        "pismo",
+        "font",
+        "okraj",
+        "typst"
+      ]
+    },
+    "zdroje": {
+      "description": "Citace, bibliografie, odkazy",
+      "keywords": [
+        "citace",
+        "zdroj",
+        "bibliografie",
+        "odkaz",
+        "literatura"
+      ]
+    },
+    "ci": {
+      "description": "GitHub Actions workflows a automatizace repozitáře",
+      "keywords": [
+        "ci",
+        "action",
+        "workflow",
+        "pipeline",
+        "automation"
+      ]
+    }
+  }
+}

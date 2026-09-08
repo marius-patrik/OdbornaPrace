@@ -1,0 +1,4 @@
+[package]
+name = "odborna-prace"
+version = "1.0.0"
+entrypoint = "main.typ"
