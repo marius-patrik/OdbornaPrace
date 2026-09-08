@@ -14,5 +14,5 @@ jobs:
     # in this repository, which carries none of the pipeline.
     with:
       pipeline-repo: marius-patrik/DarkFactory
-      pipeline-ref: "1e984b21cfd05e9fce31e9a3fbd28dcb598476e4"
+      pipeline-ref: "4768547d27c5d80ae6db3c3a3be8e355021359cb"
     secrets: inherit
