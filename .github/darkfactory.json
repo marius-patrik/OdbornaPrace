@@ -81,5 +81,12 @@
         "automation"
       ]
     }
+  },
+  "board": {
+    "$comment": "Items land on this repository's own board and on the board aggregating every repository.",
+    "global_title": "Global",
+    "link_boards": [
+      "Global"
+    ]
   }
 }

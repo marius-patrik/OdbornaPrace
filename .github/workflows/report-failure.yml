@@ -1,0 +1,15 @@
+name: Report Pipeline Failure
+
+on:
+  workflow_run:
+    workflows: [CI, Deploy Documentation, Release]
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report-failure:
+    uses: marius-patrik/DarkFactory/.github/workflows/report-failure.yml@darkfactory
+    secrets: inherit

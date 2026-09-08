@@ -1,0 +1,13 @@
+name: Project Board Automation
+
+on:
+  issues:
+    types: [opened, labeled, unlabeled, closed, reopened]
+  pull_request:
+    types: [opened, edited, closed, ready_for_review, reopened]
+  workflow_dispatch:
+
+jobs:
+  project-automation:
+    uses: marius-patrik/DarkFactory/.github/workflows/project-automation.yml@darkfactory
+    secrets: inherit

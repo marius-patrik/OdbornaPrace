@@ -1,0 +1,12 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    uses: marius-patrik/DarkFactory/.github/workflows/ci.yml@darkfactory
+    secrets: inherit
