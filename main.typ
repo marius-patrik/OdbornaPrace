@@ -3,8 +3,8 @@
 
 #show: odborna-prace.with(
   meta: meta,
+  logo: "/img/logo.jpeg",
   // Volitelné úpravy dle požadavků školy:
-  // logo: "/img/logo.png",
   // pismo: "Times New Roman",
   // velikost: 12pt,
   // radkovani: 1.5,

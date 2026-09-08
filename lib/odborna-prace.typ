@@ -23,6 +23,9 @@
 
 #let titulni-list(meta, logo: none) = {
   set align(center)
+  // Titulní list se nezarovnává do bloku — roztahování mezer v názvu práce
+  // vypadá jako chyba sazby.
+  set par(justify: false)
 
   if logo != none {
     block(image(logo, height: 3cm))
@@ -35,7 +38,8 @@
 
   v(1fr)
 
-  text(size: 26pt, weight: "bold", meta.nazev)
+  // Nadpis se nedělí na slabiky — dělení slov v názvu práce působí nedbale.
+  text(size: 26pt, weight: "bold", hyphenate: false, meta.nazev)
 
   if meta.at("podnazev", default: none) != none {
     v(0.4cm)

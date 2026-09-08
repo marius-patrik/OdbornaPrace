@@ -1,21 +1,29 @@
 = Úvod
 
-Úvod uvádí čtenáře do problematiky a vysvětluje, proč je téma zajímavé.
-Zpravidla obsahuje motivaci, vymezení problému a strukturu práce.
+Vývoj softwaru se za posledních dvacet let z velké části zautomatizoval. Sestavení
+programu, spuštění testů i nasazení do provozu dnes obstarávají stroje. Jeden krok
+však zůstal ruční: samotná změna zdrojového kódu. Právě tam se tvoří většina
+prodlev — mezi tím, kdy někdo popíše požadavek, a tím, kdy se změna dostane
+k uživatelům.
+
+Výrobní průmysl zná pojem _dark factory_, tedy „temná továrna“: provoz, který
+běží bez lidské obsluhy, a proto v něm nemusí svítit. Tato práce zkoumá, nakolik
+lze stejný princip uplatnit ve vývoji softwaru — a kde jsou jeho hranice.
 
 == Cíl práce
 
-Cílem této práce je … Formulujte cíl jednou jasnou větou; podle něj bude
-práce hodnocena a v závěru se k němu vrátíte.
+Cílem práce je navrhnout, realizovat a ověřit systém, který automatizuje vývojový
+proces od přijetí požadavku po vytvoření ověřené změny, aniž by se vzdal lidského
+schválení v rozhodujících bodech.
 
 Dílčí cíle:
 
-+ Nastudovat a popsat současný stav řešené problematiky.
-+ Navrhnout vlastní řešení.
-+ Ověřit řešení experimentálně a vyhodnotit výsledky.
++ Popsat současný stav automatizace vývoje softwaru a orchestrace jazykových modelů.
++ Navrhnout architekturu systému, který provede požadavek celým procesem.
++ Systém realizovat a nasadit na reálné repozitáře.
++ Vyhodnotit jeho chování a pojmenovat omezení, na která v provozu narazil.
 
 == Struktura práce
 
-Práce je členěna na část teoretickou a praktickou. Kapitola 2 shrnuje
-teoretická východiska, kapitola 3 popisuje vlastní realizaci, kapitola 4
-prezentuje dosažené výsledky a kapitola 5 je shrnuje v závěru.
+Kapitola 2 shrnuje teoretická východiska. Kapitola 3 popisuje vlastní systém
+DarkFactory. Kapitola 4 hodnotí výsledky jeho nasazení a kapitola 5 je shrnuje.

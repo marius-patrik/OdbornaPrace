@@ -1,48 +1,36 @@
 = Teoretická část
 
-Teoretická část shrnuje současný stav poznání a zavádí pojmy, se kterými
-dále pracujete. Vše převzaté musí být řádně ocitováno @knuth1984.
+Tato kapitola vymezuje pojmy, o které se opírá praktická část: řízení verzí,
+kontinuální integrace a orchestrace jazykových modelů.
 
-== Citování zdrojů
+== Řízení verzí a model pull requestu
 
-Citace se vkládají zavináčem a klíčem ze souboru `bib/references.bib`:
-citace v závorce @lamport1994, citace jako součást věty popisuje
-#cite(<knuth1984>, form: "prose").
+Distribuované řízení verzí umožňuje vést změny odděleně od hlavní vývojové větve
+a slučovat je až po přezkoumání. Tento postup — _pull request_ — je dnes ve vývoji
+softwaru převládající a je zároveň místem, kde se uplatňuje kontrola kvality.
 
-Poznámky pod čarou lze použít pro doplňující komentář.#footnote[
-  Takto vypadá poznámka pod čarou.
-]
+== Kontinuální integrace
 
-== Obrázky a tabulky
+Kontinuální integrace znamená, že se každá změna automaticky sestaví a otestuje.
+Zavádí pojem _požadované kontroly_ (angl. required checks): množinu úloh, které
+musí skončit úspěšně, jinak změnu nelze sloučit. Tím se z kvality stává vlastnost
+vynucovaná strojem, nikoli dohodou.
 
-Na obrázky i tabulky se odkazujte křížovým odkazem, nikoli slovy
-„na obrázku níže“ — viz @obr-schema a @tab-srovnani.
+== Jazykové modely a jejich orchestrace
 
-#figure(
-  image("/img/placeholder.png", width: 60%),
-  caption: [Popis obrázku patří pod obrázek.],
-) <obr-schema>
+Velké jazykové modely dokážou generovat i upravovat zdrojový kód. Pro praktické
+nasazení je ovšem podstatnější než samotná schopnost generovat text to, jak je
+model zasazen do procesu: jaké dostane vstupy, jaké má k dispozici nástroje a kdo
+ověřuje jeho výstup.
 
-#figure(
-  table(
-    columns: (auto, auto, auto),
-    align: (left, center, center),
-    table.header([*Metoda*], [*Přesnost*], [*Čas [s]*]),
-    [Referenční], [82,4 %], [12,1],
-    [Navržená],   [91,7 %], [8,4],
-  ),
-  caption: [Popis tabulky patří nad tabulku.],
-) <tab-srovnani>
+=== Problém jednoho poskytovatele
 
-== Zdrojový kód
+Spoléhá-li systém na jediného poskytovatele modelu, zastaví se ve chvíli, kdy
+tento poskytovatel vyčerpá kvótu nebo změní rozhraní. Řešením je vrstva, která
+umí tentýž úkol předat kterémukoli z několika poskytovatelů.
 
-#figure(
-  ```python
-  def fibonacci(n: int) -> int:
-      a, b = 0, 1
-      for _ in range(n):
-          a, b = b, a + b
-      return a
-  ```,
-  caption: [Ukázka zdrojového kódu.],
-) <kod-fib>
+== Governance automatizovaných změn
+
+Čím je systém samostatnější, tím důležitější je otázka, kde do procesu vstupuje
+člověk. Úplná autonomie není cílem — cílem je autonomie v rutinních krocích
+a lidské rozhodnutí tam, kde je nevratné.

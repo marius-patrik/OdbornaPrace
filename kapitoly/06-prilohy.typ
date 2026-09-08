@@ -1,8 +1,8 @@
 = Obsah přiloženého média
 
-Popis struktury odevzdaného archivu či úložiště.
+Odevzdaný archiv obsahuje zdrojové soubory této práce a odkaz na veřejný
+repozitář se zdrojovým kódem systému DarkFactory.
 
-= Doplňující materiály
+= Struktura konfiguračního souboru
 
-Rozsáhlé tabulky, výpisy kódu, schémata či dotazníky, které by narušovaly
-plynulost hlavního textu.
+Ukázka konfigurace popisující jeden repozitář sdílenému pracovnímu postupu.
