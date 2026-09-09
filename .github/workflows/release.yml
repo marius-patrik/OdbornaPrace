@@ -10,8 +10,8 @@ permissions:
 
 jobs:
   release:
-    uses: marius-patrik/DarkFactory/.github/workflows/release.yml@darkfactory
+    uses: marius-patrik/DarkFactory/.github/workflows/release.yml@1b586d82853e31712c15d4e76010c5a92dfd7633
     with:
       pipeline-repo: marius-patrik/DarkFactory
-      pipeline-ref: "56e369b18af1151b2cc651b953796435fc39d6c3"
+      pipeline-ref: "1b586d82853e31712c15d4e76010c5a92dfd7633"
     secrets: inherit
