@@ -7,6 +7,12 @@ on:
     types: [opened, edited, closed, ready_for_review, reopened]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  repository-projects: write
+
 jobs:
   project-automation:
     uses: marius-patrik/DarkFactory/.github/workflows/project-automation.yml@darkfactory
