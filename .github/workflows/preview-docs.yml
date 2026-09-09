@@ -1,0 +1,20 @@
+name: Preview Documentation
+
+# A caller, not a copy: every job body comes from the pinned pipeline commit, so adopting
+# an update is a one-line change here and the diff shows exactly what moved.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: write
+  deployments: write
+  pull-requests: write
+
+jobs:
+  preview-docs:
+    uses: marius-patrik/DarkFactory/.github/workflows/preview-docs.yml@5f181968a4f8d0a15c91ba8fa0c3cb0d62f27bea
+    with:
+      pipeline-repo: marius-patrik/DarkFactory
+      pipeline-ref: "5f181968a4f8d0a15c91ba8fa0c3cb0d62f27bea"
+    secrets: inherit

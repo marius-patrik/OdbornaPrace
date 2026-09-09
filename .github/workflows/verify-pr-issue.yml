@@ -1,0 +1,18 @@
+name: Verify Bound Issue
+
+# A caller, not a copy: every job body comes from the pinned pipeline commit, so adopting
+# an update is a one-line change here and the diff shows exactly what moved.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-pr-issue:
+    uses: marius-patrik/DarkFactory/.github/workflows/verify-pr-issue.yml@5f181968a4f8d0a15c91ba8fa0c3cb0d62f27bea
+    with:
+      pipeline-repo: marius-patrik/DarkFactory
+      pipeline-ref: "5f181968a4f8d0a15c91ba8fa0c3cb0d62f27bea"
+    secrets: inherit
