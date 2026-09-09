@@ -1,0 +1,28 @@
+name: Autonomous Agent
+
+# A caller, not a copy: every job body comes from the pinned pipeline commit, so adopting
+# an update is a one-line change here and the diff shows exactly what moved.
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  repository-projects: write
+  actions: write
+
+jobs:
+  agent:
+    uses: marius-patrik/DarkFactory/.github/workflows/agent.yml@5f181968a4f8d0a15c91ba8fa0c3cb0d62f27bea
+    with:
+      agent-enabled: ${{ vars.AGENT_ENABLED }}
+      pipeline-repo: marius-patrik/DarkFactory
+      pipeline-ref: "5f181968a4f8d0a15c91ba8fa0c3cb0d62f27bea"
+    secrets: inherit
