@@ -2,7 +2,7 @@
 
 = Úvod
 
-#draft[
+#confirmed[
 Vývoj softwaru se za posledních dvacet let z velké části zautomatizoval.
 Sestavení programu, spuštění testů, kontrola stylu i nasazení do provozu dnes
 obstarávají stroje a nikdo je nepovažuje za práci hodnou lidského času. Jeden
@@ -14,7 +14,7 @@ Výrobní průmysl zná pojem _dark factory_, tedy „temná továrna“: provoz
 běží bez lidské obsluhy, a proto v něm nemusí svítit. Nejde o představu úplného
 vyloučení člověka — i temná továrna má konstruktéry, kteří rozhodují, co se bude
 vyrábět — nýbrž o vyloučení člověka z opakujících se úkonů. Tato práce zkoumá,
-nakolik lze týž princip uplatnit ve vývoji softwaru a kde jsou jeho hranice.
+jak stejný princip uplatnit ve vývoji softwaru.
 ]
 
 == Motivace
