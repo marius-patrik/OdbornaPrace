@@ -59,6 +59,8 @@ textu, práce se v kontinuální integraci vysází, výsledné PDF je uloženo 
 artefakt a zveřejněno na dokumentačních stránkách repozitáře.
 ]
 
+#note[Doplnění kvantitativních údajů o sazbě: Doporučuji doplnit konkrétní naměřené časy sestavení této práce v CI (např. kompilace přes `typst compile` v kontejneru trvající 1,8 s oproti desítkám sekund u ekvivalentního LaTeXu) jako hmatatelný důkaz efektivity moderních sazebních nástrojů.]
+
 == Chyby, které se projevily až v provozu
 
 #draft[
@@ -91,6 +93,8 @@ s předpokladem o jazyce má stejnou příčinu jako potřeba zavést domény: s
 systém musí popisovat, co v repozitáři skutečně je, a nikoli předpokládat, že se
 podobá tomu, pro který byl původně napsán.
 ]
+
+#critique[Povrchní diskuse a absence srovnání s existujícími nástroji: Diskuse v sekci 4.5 se omezuje na dvě dílčí zjištění (tiché selhání nástěnky a předpoklad o jazyce), ale zcela postrádá komparativní syntézu s existujícími agentními platformami (např. SWE-agent, GitHub Copilot Workspace, Devin či Claude Engineer). V čem je přístup DarkFactory principiálně odlišný či robustnější? Jaké jsou trade-offy mezi deterministickou GitHub Actions pipeline a dynamickým plánováním jednoho velkého agenta?]
 
 == Omezení
 

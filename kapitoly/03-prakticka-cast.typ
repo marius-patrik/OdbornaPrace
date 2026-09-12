@@ -151,6 +151,8 @@ se skutečností.
 ) <tab-prostredi>
 ]
 
+#issue[Faktická neúplnost podpory Lean: Tabulka 2 uvádí Lean (`lakefile.toml`) jako matematické prostředí repozitáře, avšak v runneru a CI workflow chybí odpovídající sestavovací a testovací kroky pro Lean (podpora je pouze detekční na úrovni manifestu). V textu je třeba explicitně uvést, že jde o deklarativní přípravu pro budoucí rozšíření, nikoli plně integrované prostředí s nativním toolchainem.]
+
 === Domény a prostředí
 
 #draft[
@@ -222,6 +224,8 @@ v repozitáři co dělat, a teprve pak se pracuje. Poslední krok zajišťuje, �
 skončí úspěchem i tam, kde není co ověřovat.
 ]
 
+#note[Doplnění o paralelizaci matice a cachování závislostí: Doporučuji popsat, jak systém optimalizuje čas běhu testů (využití GitHub Actions cache pro balíčky pip/cargo/npm a maticové testování napříč verzemi interpretů), což je klíčové pro udržení nízké latence vývojového cyklu.]
+
 == Hlášení selhání
 
 #alert[Strukturální nepoměr a fragmentace: Samostatná kapitola 2. úrovně (==) tvořená jediným odstavcem o čtyřech řádcích působí nevyváženě. Z hlediska logické výstavby textu je vhodnější tuto pasáž začlenit jako podsekci (===) pod sekci „Ověřování změn“, případně ji sloučit s popisem celkové architektury a hlášení chyb do GitHub Issues.]
@@ -247,6 +251,8 @@ Zásadní inovací je zařazení striktní verifikace do každého integračníh
 
 Po úspěšném schválení pull requestu člověkem a jeho sloučení do hlavní větve centrální pracovní postup automaticky sestaví statickou podobu dokumentačního portálu a publikuje jej na GitHub Pages. Tím odpadá jakákoli manuální údržba externích zrcadel a dokumentace zůstává v absolutní shodě s reálným stavem kódu.
 ]
+
+#note[Vhodné doplnit procesní schéma generování dokumentace: Znázornit vizuálně tok dat od zdrojových souborů přes CI kontrolu striktnosti docstringů (`properdocs build --strict`) až po publikaci na GitHub Pages.]
 
 == Systém revizních značek pro lidský dohled nad textem
 

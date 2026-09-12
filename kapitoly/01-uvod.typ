@@ -76,3 +76,6 @@ architekturu, životní cyklus požadavku a způsob, jímž rozpoznává obsah r
 Kapitola 4 hodnotí výsledky nasazení včetně chyb, které se projevily až v provozu,
 a kapitola 5 je shrnuje.
 ]
+
+#alert[Chybějící odkaz na přílohy v přehledu struktury: Popis struktury práce v sekci 1.5 končí kapitolou 5 a zcela opomíjí nově rozšířenou přílohovou část (Přílohy A–E). Doporučuji doplnit větu vymezující obsah a účel přiložených materiálů (elektronické médium, JSON schéma, workflow, prompty a protokol revizních značek).]
+

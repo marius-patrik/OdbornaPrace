@@ -36,6 +36,9 @@ a schvalovat. Pull request je proto přirozeným místem, kde se uplatňuje kont
 kvality, a zároveň místem, kam lze vložit schvalovací bod pro člověka.
 ]
 
+#struct-alert[Hloubková nevyváženost úvodních teoretických sekcí: Podkapitoly 2.1.1 (Větve a jejich role) a 2.1.2 (Model pull requestu) mají rozsah pouze jednoho krátkého odstavce. Pro odbornou práci je vhodné je obohatit o teoretické koncepty Git graphu (DAG commitů, fast-forward vs merge commits, squashování) a jejich vztah k neměnnosti historie a deterministickému auditu změn generovaných LLM.]
+
+
 == Kontinuální integrace
 
 #draft[
@@ -118,6 +121,8 @@ V kontextu automatizovaného vývoje softwaru a autonomních pipeline (jako je s
 
 ==== Turn
 
+#alert[Strukturální torzo a chybějící dekompozice pojmu Turn: Podkapitola 2.3.4.1 sestává z jediné věty. Je žádoucí ji rozpracovat o typologii kroků (User turn, Assistant/Model turn, Tool Execution turn), jejich mapování na stavový automat ReAct smyčky a význam deterministického oddělení jednotlivých fází pro zachování stability KV cache.]
+
 #draft[Každému kroku mezi modelem a uživatelem se říká turn, nebo specificky model turn pro každé spuštění inference.]
 
 ==== Context Window
@@ -152,6 +157,8 @@ _Prompt engineering_ (inženýrství promptů) je disciplína zaměřená na sys
 - *Chain-of-Thought (myšlenkový řetězec)*: Vedení modelu k explicitní formulaci mezikroků a vnitřní dedukce před vygenerováním konečného kódu či akce. Rozklad komplexního zadání na postupné logické kroky zásadně potlačuje halucinace a tvoří základ fáze rozvahy (_Thought_) v cyklu ReAct.
 - *Injekce dynamického kontextu*: Průběžné doplňování promptu o aktuální stav repozitáře, stromovou strukturu souborů, chybové výpisy kompilátoru a výsledky testů, díky čemuž agent operuje nad reálnými fakty namísto odhadů.
 ]
+
+#note[Rozšíření o techniky Needle In A Haystack a negativní instrukce: Doporučuji doplnit zmínku o testování spolehlivosti vybavování informací v dlouhém kontextu (Needle In A Haystack) a o úskalích negativních příkazů („nikdy nedělej X“), které LLM často ignorují kvůli principu pozornosti zaměřené na přítomná slova.]
 
 === Agent vs Chatbot
 
