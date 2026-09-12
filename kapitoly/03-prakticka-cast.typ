@@ -2,7 +2,7 @@
 
 = Praktická část
 
-#draft[
+#confirmed[
 Praktickou částí práce je systém *DarkFactory* — sada pravidel, skriptů
 a pracovních postupů, které z repozitáře udělají samostatně pracující vývojový
 provoz. Zdrojový kód je veřejně dostupný @darkfactory.
@@ -10,7 +10,7 @@ provoz. Zdrojový kód je veřejně dostupný @darkfactory.
 
 == Cíl a rozsah systému
 
-#draft[
+#confirmed[
 Systém má převzít rutinní kroky vývojového procesu: přijetí požadavku, jeho
 interpretaci, naplánování, provedení změny a její ověření. Nemá nahradit
 rozhodování o tom, co se má stavět; to zůstává člověku, a systém je navržen tak,
@@ -50,7 +50,7 @@ připraveny.
 
 === Jediný konfigurační soubor
 
-#draft[
+#confirmed[
 Vše, co se mezi repozitáři liší, je soustředěno do jediného souboru
 `darkfactory.json`. Ten popisuje totožnost repozitáře, jeho oblasti, nástěnky,
 na které patří jeho úkoly, a případné odchylky od výchozího chování. Sdílený
