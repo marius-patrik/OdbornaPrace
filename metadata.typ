@@ -2,6 +2,8 @@
 //  Metadata práce.
 // ─────────────────────────────────────────────────────────────
 
+#import "lib/odborna-prace.typ": draft
+
 #let meta = (
   nazev: "Úvod do agentického AI a design autonomní pipeline pro softwarový vývoj",
   podnazev: "Návrh a realizace systému DarkFactory",
@@ -16,7 +18,7 @@
   mesto: "Hradci Králové",
   rok: 2026,
 
-  anotace: highlight(fill: yellow)[
+  anotace: draft[
     Práce se zabývá návrhem a realizací autonomního systému pro vývoj softwaru,
     který přebírá rutinní kroky vývojového procesu — od přijetí požadavku přes
     jeho interpretaci a naplánování až po vytvoření a ověření změny. Teoretická
@@ -25,7 +27,7 @@
     architektura a governance, a jsou vyhodnoceny výsledky jeho nasazení na
     reálných repozitářích.
   ],
-  abstract: highlight(fill: yellow)[
+  abstract: draft[
     This thesis deals with the design and implementation of an autonomous
     software engineering system that takes over the routine steps of the
     development process — from intake of a request through its interpretation
