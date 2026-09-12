@@ -128,7 +128,7 @@ Model je schopen přijmout pouze omezený objem vstupu; tomuto limitu se říká
 
 ==== Compaction
 
-#diff[Je akce, kterou provede harness v moment kdy se CW naplní. Prakticky se jedná o externí vyvolaní modelu s intrukcí, aby zkrátil konverzaci a vloženým celým logem konverzace. Výsledný zkracený context je od té chvíle používán místo původní části konverzace.][Představuje proces sumarizace a zkrácení historie, který řídicí harness iniciuje ve chvíli, kdy zaplnění kontextového okna dosáhne stanoveného prahu. Zpravidla jde o vyvolání modelu se specifickou systémovou instrukcí pro bezeztrátovou syntézu dosavadního průběhu sezení a kompletním protokolem dosavadní komunikace. Výsledný zkrácený kontext následně v kontextovém okně nahradí původní rozsáhlou historii kroků.]
+#confirmed[Představuje proces sumarizace a zkrácení historie, který řídicí harness iniciuje ve chvíli, kdy zaplnění kontextového okna dosáhne stanoveného prahu. Zpravidla jde o vyvolání modelu se specifickou systémovou instrukcí pro bezeztrátovou syntézu dosavadního průběhu sezení a kompletním protokolem dosavadní komunikace. Výsledný zkrácený kontext následně v kontextovém okně nahradí původní rozsáhlou historii kroků.]
 
 ==== Context Rot
 
