@@ -6,3 +6,6 @@ out/
 Thumbs.db
 .vscode/
 .idea/
+
+.pipeline/
+.darkfactory/
