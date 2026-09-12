@@ -1,8 +1,10 @@
-// TODO: Tento text je koncept vygenerovaný jako osnova. Před odevzdáním jej přepište
-// vlastními slovy — odevzdání cizího textu je plagiát (Průvodce, kap. 5.3).
+#import "../lib/odborna-prace.typ": note, alert
+
+#let ai(body) = highlight(fill: yellow, body)
 
 = Úvod
 
+#ai[
 Vývoj softwaru se za posledních dvacet let z velké části zautomatizoval.
 Sestavení programu, spuštění testů, kontrola stylu i nasazení do provozu dnes
 obstarávají stroje a nikdo je nepovažuje za práci hodnou lidského času. Jeden
@@ -15,9 +17,11 @@ běží bez lidské obsluhy, a proto v něm nemusí svítit. Nejde o představu 
 vyloučení člověka — i temná továrna má konstruktéry, kteří rozhodují, co se bude
 vyrábět — nýbrž o vyloučení člověka z opakujících se úkonů. Tato práce zkoumá,
 nakolik lze týž princip uplatnit ve vývoji softwaru a kde jsou jeho hranice.
+]
 
 == Motivace
 
+#ai[
 S rozšířením velkých jazykových modelů se objevila možnost automatizovat i psaní
 kódu. Většina dostupných nástrojů však řeší jen dílčí krok: vygenerují návrh
 změny, který někdo musí zasadit do procesu, ověřit a schválit. Chybí popis toho,
@@ -27,9 +31,11 @@ co se stane při selhání a jak se pozná, že je výsledek správný.
 Právě tato mezera je předmětem práce. Zajímavá není otázka, zda model dokáže
 napsat kód; to je dnes doloženo. Zajímavá je otázka, jaké okolí musí kolem
 takového modelu vzniknout, aby jeho výstupu bylo možné důvěřovat.
+]
 
 == Cíl práce
 
+#ai[
 Cílem této práce je navrhnout, realizovat a ověřit systém, který automatizuje
 vývojový proces od přijetí požadavku po vytvoření ověřené změny, aniž by se vzdal
 lidského schválení v rozhodujících bodech.
@@ -41,9 +47,13 @@ Dílčí cíle:
 + Navrhnout architekturu systému, který provede požadavek celým procesem.
 + Systém realizovat a nasadit na reálné repozitáře.
 + Vyhodnotit jeho chování a pojmenovat omezení, na která v provozu narazil.
+]
+
+#note[Formulace výzkumných otázek: Pro zvýšení vědeckého a metodického přínosu práce u obhajoby doporučuji pod cíle práce doplnit 2–3 explicitní výzkumné otázky (např. zda lze dosáhnout bezobslužného běhu pipeline při zachování striktních deterministických záruk a jaké jsou limitující faktory současných LLM při samostatné práci nad rozsáhlým repozitářem).]
 
 == Metodika
 
+#ai[
 Práce je z povahy tématu konstrukční: hlavním výstupem je funkční systém, nikoli
 měření. Postup odpovídá vývoji softwaru — po nastudování východisek následoval
 návrh, realizace a nasazení na reálné repozitáře, přičemž zjištění z provozu se
@@ -52,11 +62,17 @@ vracela zpět do návrhu.
 Ověření proto neprobíhalo formou experimentu s kontrolní skupinou, nýbrž
 sledováním chování systému v provozu. Sledovány byly zejména nalezené chyby,
 neboť právě ty ukazují na rozdíl mezi předpokladem a skutečností.
+]
+
+#note[Doporučuji v metodice explicitně uvést zkoumané repozitáře (vlastní systém DarkFactory, vícejazyčná aplikace omnis a menší projekt ChessWithQuests) a specifikovat, že ověření probíhá sledováním reálných běhů automatizovaného GitHub Actions workflow nad reálnými issues a pull requesty.]
 
 == Struktura práce
 
+#ai[
 Kapitola 2 shrnuje teoretická východiska: řízení verzí, kontinuální integraci,
-orchestraci jazykových modelů a řízení automatizovaných změn. Kapitola 3 popisuje
-vlastní systém DarkFactory — jeho architekturu, životní cyklus požadavku
-a způsob, jímž rozpoznává obsah repozitáře. Kapitola 4 hodnotí výsledky nasazení
-včetně chyb, které se projevily až v provozu, a kapitola 5 je shrnuje.
+architekturu a orchestraci jazykových modelů a princip zapojení člověka do smyčky
+(_Human-in-the-loop_). Kapitola 3 popisuje vlastní systém DarkFactory — jeho
+architekturu, životní cyklus požadavku a způsob, jímž rozpoznává obsah repozitáře.
+Kapitola 4 hodnotí výsledky nasazení včetně chyb, které se projevily až v provozu,
+a kapitola 5 je shrnuje.
+]

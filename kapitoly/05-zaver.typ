@@ -1,8 +1,12 @@
-// TODO: Tento text je koncept vygenerovaný jako osnova. Před odevzdáním jej přepište
-// vlastními slovy — odevzdání cizího textu je plagiát (Průvodce, kap. 5.3).
+#import "../lib/odborna-prace.typ": note
+
+#let ai(body) = highlight(fill: yellow, body)
 
 = Závěr
 
+#note[Syntéza cílů a technických inovací: Doporučuji v závěru detailněji rekapitulovat naplnění jednotlivých dílčích cílů ve vztahu ke stanovené metodice a zdůraznit klíčové technické inovace DarkFactory (zejména dvoustupňový Human Gate, žebříček rotace kvót a bezeztrátovou serializaci štafety).]
+
+#ai[
 Cílem práce bylo navrhnout, realizovat a ověřit systém automatizující vývojový
 proces od přijetí požadavku po vytvoření ověřené změny, aniž by se vzdal lidského
 schválení v rozhodujících bodech. Cíl byl naplněn: systém DarkFactory byl
@@ -30,3 +34,6 @@ například o strojově ověřované matematické důkazy, pro něž je systém 
 připraven. Druhým je zpřesnění hlášení chyb tak, aby každé selhání zanechalo
 trvalý a viditelný záznam — v této práci byl učiněn první krok, kdy selhání
 zakládá úkol, který se po nápravě sám uzavře.
+]
+
+#note[Jako další směr rozvoje doporučuji zmínit možnost hybridního nasazení lokálních open-weights modelů (např. běžících přes Ollama / vLLM) jako bezplatného prvního stupně pipeline pro rutinní formátování a syntaktickou kontrolu před delegováním komplexních úloh na cloudová API (Claude, GPT).]

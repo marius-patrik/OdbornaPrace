@@ -16,7 +16,7 @@
   mesto: "Hradci Králové",
   rok: 2026,
 
-  anotace: [
+  anotace: highlight(fill: yellow)[
     Práce se zabývá návrhem a realizací autonomního systému pro vývoj softwaru,
     který přebírá rutinní kroky vývojového procesu — od přijetí požadavku přes
     jeho interpretaci a naplánování až po vytvoření a ověření změny. Teoretická
@@ -25,7 +25,7 @@
     architektura a governance, a jsou vyhodnoceny výsledky jeho nasazení na
     reálných repozitářích.
   ],
-  abstract: [
+  abstract: highlight(fill: yellow)[
     This thesis deals with the design and implementation of an autonomous
     software engineering system that takes over the routine steps of the
     development process — from intake of a request through its interpretation

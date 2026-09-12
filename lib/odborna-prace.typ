@@ -21,6 +21,35 @@
   heading(numbering: none, outlined: true, text-nadpisu)
 }
 
+#let note(body) = block(
+  fill: rgb("ecfdf5"),
+  stroke: (left: 3pt + rgb("10b981")),
+  inset: (x: 10pt, y: 8pt),
+  radius: (right: 4pt),
+  width: 100%,
+  text(fill: rgb("065f46"), size: 10.5pt)[💡 *Návrh na vylepšení:* #body]
+)
+
+#let issue(body) = block(
+  fill: rgb("fef2f2"),
+  stroke: (left: 3pt + rgb("ef4444")),
+  inset: (x: 10pt, y: 8pt),
+  radius: (right: 4pt),
+  width: 100%,
+  text(fill: rgb("991b1b"), size: 10.5pt)[⚠️ *Chyba / Nesrovnalost k opravě:* #body]
+)
+
+#let alert(body) = block(
+  fill: rgb("fefce8"),
+  stroke: (left: 3pt + rgb("eab308")),
+  inset: (x: 10pt, y: 8pt),
+  radius: (right: 4pt),
+  width: 100%,
+  text(fill: rgb("854d0e"), size: 10.5pt)[📐 *Strukturální upozornění:* #body]
+)
+
+#let struct-alert = alert
+
 #let titulni-list(meta, logo: none) = {
   set align(center)
   // Titulní list se nezarovnává do bloku — roztahování mezer v názvu práce
@@ -202,7 +231,7 @@
   // ── Zadní část ───────────────────────────────────────────
   if bibliografie != none {
     pagebreak(weak: true)
-    bibliography(bibliografie, style: bib-styl, title: "Seznam zdrojů")
+    bibliography(bibliografie, style: bib-styl, title: "Seznam zdrojů", full: true)
   }
 }
 
