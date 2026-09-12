@@ -11,10 +11,10 @@ permissions:
 
 jobs:
   report-failure:
-    uses: marius-patrik/DarkFactory/.github/workflows/report-failure.yml@02490f3012ad0b91beac0c20c2d807adb1647932
+    uses: marius-patrik/DarkFactory/.github/workflows/report-failure.yml@7ecba1617f553e6a34ceb31177e1ac84d08c350f
     # Pinned so the shared scripts are checked out; without a ref the job looks for them
     # in this repository, which carries none of the pipeline.
     with:
       pipeline-repo: marius-patrik/DarkFactory
-      pipeline-ref: "02490f3012ad0b91beac0c20c2d807adb1647932"
+      pipeline-ref: "7ecba1617f553e6a34ceb31177e1ac84d08c350f"
     secrets: inherit
