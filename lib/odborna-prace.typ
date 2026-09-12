@@ -50,6 +50,8 @@
 
 #let struct-alert = alert
 
+#let ai(body) = highlight(fill: rgb("fef08a"))[#body]
+
 #let titulni-list(meta, logo: none) = {
   set align(center)
   // Titulní list se nezarovnává do bloku — roztahování mezer v názvu práce

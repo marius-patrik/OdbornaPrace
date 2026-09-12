@@ -106,3 +106,29 @@ Jednotlivé sekce plní tyto systémové role:
 - *required_checks*: Deklarace stavových kontrol, které musí úspěšně skončit před povolením sloučení pull requestu (ochrana proti uváznutí na přeskočených kontrolách).
 - *environment*: Pravidla rozpoznávání prostředí v repozitáři podle manifestních souborů s možností explicitního přepsání verzí nástrojů.
 - *upstream*: Zajišťuje připnutí sdíleného workflow ke konkrétní verzi či commitu upstream repozitáře, což brání nechtěným rozpadům při aktualizacích.
+
+= Protokol revizních značek v sazebním systému Typst
+
+Tato příloha uvádí referenční definici a použití vizuálních revizních značek pro řízení a dohled nad generovaným textem v ekosystému DarkFactory.
+
+#figure(
+  ```typ
+  #import "lib/odborna-prace.typ": ai, note, issue, alert
+
+  // 1. Návrh agenta čekající na autorské posouzení:
+  #ai[Tento odstavec navrhl autonomní model v rámci řešení požadavku.]
+
+  // 2. Návrh na věcné či stylistické vylepšení:
+  #note[Doplňte porovnání rychlosti kompilace mezi verzemi 0.1 a 0.2.]
+
+  // 3. Věcná nebo formální chyba vyžadující opravu:
+  #issue[Uvedená citace neodpovídá zdroji v souboru bib/references.bib.]
+
+  // 4. Strukturální upozornění na nevyváženost textu:
+  #alert[Kapitola postrádá shrnutí naměřených výsledků před diskusí.]
+  ```,
+  caption: [Ukázka zápisu a použití revizních značek v jazyce Typst.],
+) <kod-znacky-typst>
+
+Každá značka plní jasnou komunikační roli v procesu lidského schvalování: zatímco finální text zůstává zcela bez značek, neověřené pasáže jsou okamžitě patrné díky žlutému zvýraznění a náměty či chyby jsou separovány do barevných panelů na okraji textu.
+

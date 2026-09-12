@@ -1,5 +1,5 @@
 #import "metadata.typ": meta
-#import "lib/odborna-prace.typ": odborna-prace, prilohy
+#import "lib/odborna-prace.typ": odborna-prace, prilohy, note, issue, alert, struct-alert, ai
 
 #show: odborna-prace.with(
   meta: meta,

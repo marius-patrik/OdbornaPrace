@@ -210,3 +210,16 @@ Selhání kterékoli úlohy zakládá úkol s odkazem na neúspěšný běh. Opa
 selhání téže úlohy nezakládá další úkol, nýbrž doplní komentář ke stávajícímu;
 bez toho by úloha selhávající při každé změně zahltila seznam úkolů. Jakmile
 úloha znovu uspěje, úkol se sám uzavře.
+
+== Systém revizních značek pro lidský dohled nad textem
+
+Při rozšiřování systému DarkFactory na správu a tvorbu dokumentace (doména textu) vyvstala potřeba formalizovat spolupráci člověka a autonomního agenta přímo v sazebním formátu Typst. Výsledkem je protokol vizuálních revizních značek (*Review Markers*), který barevně a sémanticky rozlišuje stav zpracování jednotlivých pasáží:
+
+1. *Čistý neoznačený text*: Představuje finální, autorsky schválený a přijatý text v hlase autora. Žádná část finálního textu nesmí být trvale uzavřena ve značkách.
+2. *Žluté zvýraznění (`#ai[...]`)*: Označuje pasáže vygenerované nebo rozšířené modelem, které dosud autor nezkontroloval. Upozorňuje na nutnost věcného ověření a jazykové úpravy. Jakmile autor text schválí nebo přepíše, značku odstraní.
+3. *Zelený panel (`#note[...]` — 💡 Návrh na vylepšení)*: Konstruktivní doporučení, nápady na rozšíření, doplnění schémat či návrhy na praktické propojení. Po zapracování se panel smaže.
+4. *Červený panel (`#issue[...]` — ⚠️ Chyba / Nesrovnalost k opravě)*: Detekované věcné nepřesnosti, logické mezery, překlepy nebo duplicita obsahu. Značka přesně formuluje vadu a zaniká s jejím odstraněním.
+5. *Žlutý panel (`#alert[...]` — 📐 Strukturální upozornění)*: Upozornění na hloubkovou nevyváženost kapitol, chybějící dekompozice komponent či nesoulad s osnovou práce.
+
+Protokol umožňuje autonomnímu agentovi navrhovat změny s transparentním vyznačením míry jistoty a člověku poskytuje okamžitou vizuální kontrolu nad tím, které části rukopisu již prošly lidskou redakcí a které ještě čekají na posouzení.
+
