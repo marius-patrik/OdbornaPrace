@@ -11,10 +11,10 @@ permissions:
 
 jobs:
   ci:
-    uses: marius-patrik/DarkFactory/.github/workflows/ci.yml@939f862878dfa6f365e2791cc7b1ad06bcbc3316
+    uses: marius-patrik/DarkFactory/.github/workflows/ci.yml@234d84d9bc24ee246fc0b91d29759c8699b24479
     # Pinned so the shared scripts are checked out; without a ref the job looks for them
     # in this repository, which carries none of the pipeline.
     with:
       pipeline-repo: marius-patrik/DarkFactory
-      pipeline-ref: "939f862878dfa6f365e2791cc7b1ad06bcbc3316"
+      pipeline-ref: "234d84d9bc24ee246fc0b91d29759c8699b24479"
     secrets: inherit

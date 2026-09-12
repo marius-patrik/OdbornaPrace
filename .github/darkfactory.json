@@ -16,7 +16,7 @@
   "upstream": {
     "$comment": "Consumer of the DarkFactory pipeline; pin to a commit SHA once the paper domain has landed upstream.",
     "repo": "marius-patrik/DarkFactory",
-    "ref": "939f862878dfa6f365e2791cc7b1ad06bcbc3316"
+    "ref": "234d84d9bc24ee246fc0b91d29759c8699b24479"
   },
   "environment": {
     "$comment": "Detection finds typst.toml on its own. The commands are declared because this repository vendors its fonts, so the build is not the ecosystem default; formatting is off because typstyle would reflow hand-set Czech typography.",
