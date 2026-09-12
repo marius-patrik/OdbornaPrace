@@ -104,6 +104,15 @@ Jednotlivé geometrické směry a posuny v prostoru navíc odpovídají konkrét
 Aby architektura transformeru zohlednila také pořadí tokenů v sekvenci, přičítá se k sémantickému embeddingu poziční kódování (positional encoding, dnes standardně rotační embedding RoPE). Teprve takto vzniklé vektory vstupují do mechanismu pozornosti k dalšímu výpočtu.
 ]
 
+#figure(
+  image("../img/vector-embedding-queen.svg", width: 100%),
+  caption: [Geometrická reprezentace sémantických vztahů v embeddingovém prostoru: A) Klasická vektorová aritmetika pojmů ($arrow(v)("král") - arrow(v)("muž") + arrow(v)("žena") approx arrow(v)("královna")$), B) Izomorfní algebraické relace v programování (funkce $arrow$ metoda, proměnná $arrow$ atribut).],
+) <fig-embedding-queen>
+
+#draft[
+Grafické znázornění na @fig-embedding-queen ilustruje, jak vícerozměrné vektorové vnoření zachycuje abstraktní sémantické relace. Na levém panelu (A) je patrné, že vektorový posun reprezentující přechod k panovnickému stavu ($arrow(v)("panovník")$) má téměř identický směr a velikost jak mezi „mužem“ a „králem“, tak mezi „ženou“ a „královnou“. Pravý panel (B) ukazuje analogický princip v programovacím kódu: model vnímá vztah mezi volně stojící funkcí a metodou zapouzdřenou ve třídě jako paralelní posun ve vektorovém prostoru k relaci mezi globální proměnnou a atributem objektu. Díky této prostorové struktuře dokáže LLM provádět konzistentní refaktoring a typovou inferenci.
+]
+
 #note[Vhodné doplnit malou srovnávací tabulku či praktický příklad: kolik tokenů spotřebuje identický větný význam v češtině oproti angličtině (např. pomocí knihovny tiktoken), což krásně podloží argumentaci o efektivním využití kontextového okna a nákladech na inference.]
 
 === Multimodální modely
