@@ -1,4 +1,4 @@
-#import "../lib/odborna-prace.typ": note, alert, critique, added, draft, confirmed, diff
+#import "../lib/odborna-prace.typ": note, issue, alert, struct-alert, critique, added, draft, unconfirmed, confirmed, removed, diff
 
 = Závěr
 

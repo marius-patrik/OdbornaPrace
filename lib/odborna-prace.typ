@@ -226,18 +226,19 @@
   show figure.caption: set text(size: 10pt)
   show raw: set text(font: ("DejaVu Sans Mono", "Courier New"), size: 9.5pt)
   show raw.where(block: true): it => block(
-    fill: rgb("#f8fafc"),
-    stroke: 0.5pt + rgb("#cbd5e1"),
+    fill: rgb("#1e293b"),
+    stroke: 0.5pt + rgb("#334155"),
     inset: (x: 10pt, y: 8pt),
     radius: 4pt,
     width: 100%,
-    it,
+    text(fill: rgb("#f1f5f9"), it),
   )
   show raw.where(block: false): it => box(
     fill: rgb("#f1f5f9"),
+    stroke: 0.3pt + rgb("#cbd5e1"),
     inset: (x: 3pt, y: 1pt),
     radius: 2pt,
-    it,
+    text(fill: rgb("#0f172a"), it),
   )
   show link: set text(fill: rgb("#0b4f9e"))
   set table(stroke: 0.5pt)

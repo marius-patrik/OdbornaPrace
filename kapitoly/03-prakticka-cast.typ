@@ -1,4 +1,4 @@
-#import "../lib/odborna-prace.typ": note, alert, critique, added, draft, confirmed, diff
+#import "../lib/odborna-prace.typ": note, issue, alert, struct-alert, critique, added, draft, unconfirmed, confirmed, removed, diff
 
 = Praktická část
 
@@ -250,14 +250,26 @@ Po úspěšném schválení pull requestu člověkem a jeho sloučení do hlavn�
 
 == Systém revizních značek pro lidský dohled nad textem
 
-Při rozšiřování systému DarkFactory na správu a tvorbu dokumentace (doména textu) vyvstala potřeba formalizovat spolupráci člověka a autonomního agenta přímo v sazebním formátu Typst. Výsledkem je protokol vizuálních revizních značek (*Review Markers*), který barevně a sémanticky rozlišuje stav zpracování jednotlivých pasáží:
+#draft[
+Při rozšiřování systému DarkFactory na správu a tvorbu dokumentace (doména textu) vyvstala potřeba formalizovat spolupráci člověka a autonomního agenta přímo v sazebním formátu Typst. Výsledkem je protokol vizuálních revizních značek (*Review Markers*) a textových revizních funkcí, který barevně a sémanticky rozlišuje stav zpracování jednotlivých pasáží:
+]
 
-1. *Čistý neoznačený text*: Představuje finální, autorsky schválený a přijatý text v hlase autora. Žádná část finálního textu nesmí být trvale uzavřena ve značkách.
-2. *Žluté zvýraznění (`#draft[...]`)*: Označuje pasáže vygenerované nebo rozšířené modelem, které dosud autor nezkontroloval. Upozorňuje na nutnost věcného ověření a jazykové úpravy. Jakmile autor text schválí nebo přepíše, značku odstraní.
-3. *Zelený panel (`#note[...]` — 💡 Návrh na vylepšení)*: Konstruktivní doporučení, nápady na rozšíření, doplnění schémat či návrhy na praktické propojení. Po zapracování se panel smaže.
-4. *Červený panel (`#issue[...]` — ⚠️ Chyba / Nesrovnalost k opravě)*: Detekované věcné nepřesnosti, logické mezery, překlepy nebo duplicita obsahu. Značka přesně formuluje vadu a zaniká s jejím odstraněním.
-5. *Žlutý panel (`#alert[...]` — 📐 Strukturální upozornění)*: Upozornění na hloubkovou nevyváženost kapitol, chybějící dekompozice komponent či nesoulad s osnovou práce.
-6. *Oranžový panel (`#critique[...]` — 🔥 Hloubková kritika / Oponentura)*: Hloubková teoretická a architektonická oponentura bez servítků — odhalování slepých míst, neověřených předpokladů, bezpečnostních rizik a metodologických slabin formulovaných jako břitké otázky k obhajobě.
+#note[Konstruktivní doporučení, nápady na rozšíření, doplnění schémat či návrhy na praktické propojení. Po zapracování se panel smaže.]
 
-Protokol umožňuje autonomnímu agentovi navrhovat změny s transparentním vyznačením míry jistoty a člověku poskytuje okamžitou vizuální kontrolu nad tím, které části rukopisu již prošly lidskou redakcí a které ještě čekají na posouzení.
+#issue[Detekované věcné nepřesnosti, logické mezery, překlepy nebo duplicita obsahu. Značka přesně formuluje vadu a zaniká s jejím odstraněním.]
 
+#alert[Upozornění na hloubkovou nevyváženost kapitol, chybějící dekompozice komponent či nesoulad s osnovou práce.]
+
+#critique[Hloubková teoretická a architektonická oponentura bez servítků — odhalování slepých míst, neověřených předpokladů, bezpečnostních rizik a metodologických slabin formulovaných jako břitké otázky k obhajobě.]
+
+#draft[
+V toku textu se uplatňují tyto zvýrazňovací a srovnávací funkce:
+- #draft[Žluté zvýraznění (`#draft[...]` / `#unconfirmed[...]`): Označuje neověřený text konceptu čekající na autorské posouzení a revizi.]
+- #added[Zelené zvýraznění (`#added[...]`): Označuje nově přidaný text vygenerovaný autonomním agentem na základě požadavku či doporučení.]
+- #confirmed[Modré zvýraznění (`#confirmed[...]`): Označuje text potvrzený uživatelem, který dosud neprošel finální integrací.]
+- #removed[Červené zvýraznění s přeškrtnutím (`#removed[...]`): Označuje text navržený k odstranění z rukopisu.]
+- #diff[Původní nahrazovaný text][Srovnávací diff (`#diff(old, new)`): Zobrazuje původní text přeškrtnutý v červené barvě následovaný novým textem v zelené barvě.]
+- Čistý neoznačený text představuje finální, autorsky schválený a přijatý text v hlase autora (v rozpracovaném stavu konceptu jsou veškeré dosud neuzavřené pasáže zviditelněny revizními funkcemi).
+
+Tento protokol umožňuje autonomnímu agentovi navrhovat změny s transparentním vyznačením míry jistoty a člověku poskytuje okamžitou vizuální kontrolu nad tím, které části rukopisu již prošly lidskou redakcí a které ještě čekají na posouzení.
+]

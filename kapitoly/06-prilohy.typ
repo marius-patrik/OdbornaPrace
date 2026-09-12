@@ -1,4 +1,4 @@
-#import "../lib/odborna-prace.typ": note, issue, alert, critique, added, draft, confirmed, diff
+#import "../lib/odborna-prace.typ": note, issue, alert, struct-alert, critique, added, draft, unconfirmed, confirmed, removed, diff
 
 #alert[Nevyvážený rozsah a obsah příloh: Přílohy práce jsou silně redukovány (pouze 2 položky, z nichž jedna duplikuje konfiguraci z kapitoly 3). Pro odbornou práci tohoto typu je žádoucí rozšířit přílohovou část o: A) Obsah přiloženého média, B) Kompletní JSON schéma souboru `darkfactory.json`, C) Ukázku volaného sdíleného GitHub Actions workflow a D) Systémový prompt použitý pro plánovacího a kódovacího agenta.]
 
