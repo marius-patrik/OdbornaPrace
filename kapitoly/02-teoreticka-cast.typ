@@ -122,7 +122,7 @@ V kontextu automatizovaného vývoje softwaru a autonomních pipeline (jako je s
 
 ==== Context Window
 
-#draft[
+#confirmed[
 Model je schopen přijmout pouze omezený objem vstupu; tomuto limitu se říká kontextové okno (_Context Window_) a vyjadřuje se v počtu tokenů. Na rozdíl od slovníku (_vocabulary_), který vymezuje pouze repertoár známých tokenů, je maximální délka kontextového okna určena architekturou pozičního kódování (např. škálováním frekvenčních bází v RoPE) a hardwarovou náročností mechanismu pozornosti — kvadratickou složitostí $O(N^2)$ a velikostí alokované KV cache v operační či grafické paměti.
 ]
 
