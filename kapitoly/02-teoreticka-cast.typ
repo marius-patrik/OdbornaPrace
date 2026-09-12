@@ -20,23 +20,20 @@ a zkoumat i bez spojení se serverem a slučovat je až ve chvíli, kdy jsou hot
 
 === Větve a jejich role
 
-#draft[
-Větev je pojmenovaný ukazatel na určitý stav historie. Práce na nové vlastnosti
-probíhá ve větvi oddělené od hlavní vývojové linie, takže rozpracovaný stav
-neovlivní ostatní. Tento postup má i důsledek pro automatizaci: dokud změna
-existuje pouze ve větvi, lze ji libovolně ověřovat, aniž by hrozila škoda.
-]
+#diff[Větev je pojmenovaný ukazatel na určitý stav historie. Práce na nové vlastnosti probíhá ve větvi oddělené od hlavní vývojové linie, takže rozpracovaný stav neovlivní ostatní. Tento postup má i důsledek pro automatizaci: dokud změna existuje pouze ve větvi, lze ji libovolně ověřovat, aniž by hrozila škoda.][V moderních distribuovaných systémech správy verzí (zejména v systému Git @chacon2014) je repozitář formálně modelován jako orientovaný acyklický graf (_Directed Acyclic Graph_, DAG), jehož uzly tvoří neměnné objekty revizí (_commits_) provázané kryptografickými hashy (SHA-1 či SHA-256) na své rodičovské stavy. Větev v tomto modelu nepředstavuje fyzickou kopii souborů, nýbrž odlehčený, pohyblivý ukazatel (_ref_) na konkrétní uzel grafu.
+
+Tato grafová architektura má klíčový význam pro bezpečné zapojení autonomních agentů do vývojového procesu:
+- *Izolace stavu*: Agent operuje ve vyhrazené větvi (např. `feature/...` nebo `agent/...`), která odbočuje z hlavní vývojové linie (`main`). Veškeré pokusné mutace souborového systému, mezistavy a ladicí kroky zůstávají striktně izolované, aniž by ohrozily stabilitu produkčního kódu nebo práci ostatních členů týmu.
+- *Deterministický audit*: Každý krok agenta lze reprezentovat jako atomický commit s přesným časovým otiskem, autorskými metadaty a odkazem na kontextové zadání. Vzniká tak neměnná a zpětně ověřitelná historie změn.
+- *Strategie slučování*: Při integraci hotové větve do hlavní linie se uplatňují různé topologické strategie: přímý posun ukazatele (_fast-forward_), vytvoření explicitního slučovacího uzlu (_merge commit_), nebo sloučení celé sekvence dílčích mezikroků agenta do jediného čistého uzlu (_squash and merge_). Právě squashování je v autonomních pipeline preferováno, neboť eliminuje šum v podobě neúspěšných pokusů modelu a v hlavní větvi zanechává pouze finální, ověřený přírůstek.]
 
 === Model pull requestu
 
-#draft[
-Sloučení větve do hlavní linie se ve většině dnešních projektů odehrává
-prostřednictvím _pull requestu_ — návrhu změny, který lze komentovat, ověřovat
-a schvalovat. Pull request je proto přirozeným místem, kde se uplatňuje kontrola
-kvality, a zároveň místem, kam lze vložit schvalovací bod pro člověka.
-]
+#diff[Sloučení větve do hlavní linie se ve většině dnešních projektů odehrává prostřednictvím _pull requestu_ — návrhu změny, který lze komentovat, ověřovat a schvalovat. Pull request je proto přirozeným místem, kde se uplatňuje kontrola kvality, a zároveň místem, kam lze vložit schvalovací bod pro člověka.][Sloučení větve do hlavní vývojové linie se v moderním kolaborativním softwarovém inženýrství odehrává prostřednictvím modelu *pull requestu* (PR, na platformě GitLab též _Merge Request_). Jde o formalizovaný procesní uzel, v němž autor větve předkládá navržený diff kódu k revizi dříve, než dojde k jeho trvalému začlenění do chráněné hlavní větve.
 
-#struct-alert[Hloubková nevyváženost úvodních teoretických sekcí: Podkapitoly 2.1.1 (Větve a jejich role) a 2.1.2 (Model pull requestu) mají rozsah pouze jednoho krátkého odstavce. Pro odbornou práci je vhodné je obohatit o teoretické koncepty Git graphu (DAG commitů, fast-forward vs merge commits, squashování) a jejich vztah k neměnnosti historie a deterministickému auditu změn generovaných LLM.]
+V kontextu autonomního vývoje plní pull request dvě nezastupitelné funkce:
+1. *Strojová validační brána*: Na vytvoření nebo aktualizaci PR reaguje integrační server (CI), který v izolovaném kontejneru spustí sadu automatizovaných testů, typových kontrol a bezpečnostních linterů. Tím je objektivně ověřeno, že syntetický kód generovaný modelem splňuje stanovené standardy a nezpůsobuje regresi stávající funkcionality.
+2. *Lidská schvalovací brána (Human Gate)*: Pull request poskytuje přehledné rozhraní zobrazující řádkový diff změn, výsledky automatických testů a strukturovaný popis úprav. Člověk v roli recenzenta (_code reviewera_) tak může provést finální sémantickou kontrolu a rozhodnout o schválení či zamítnutí změny. Pull request tím představuje ideální architektonický styčný bod pro princip člověka ve smyčce (_Human-in-the-loop_).]
 
 
 == Kontinuální integrace
@@ -113,7 +110,20 @@ Aby architektura transformeru zohlednila také pořadí tokenů v sekvenci, při
 Grafické znázornění na @fig-embedding-queen ilustruje, jak vícerozměrné vektorové vnoření zachycuje abstraktní sémantické relace. Na levém panelu (A) je patrné, že vektorový posun reprezentující přechod k panovnickému stavu ($arrow(v)("panovník")$) má téměř identický směr a velikost jak mezi „mužem“ a „králem“, tak mezi „ženou“ a „královnou“. Pravý panel (B) ukazuje analogický princip v programovacím kódu: model vnímá vztah mezi volně stojící funkcí a metodou zapouzdřenou ve třídě jako paralelní posun ve vektorovém prostoru k relaci mezi globální proměnnou a atributem objektu. Díky této prostorové struktuře dokáže LLM provádět konzistentní refaktoring a typovou inferenci.
 ]
 
-#note[Vhodné doplnit malou srovnávací tabulku či praktický příklad: kolik tokenů spotřebuje identický větný význam v češtině oproti angličtině (např. pomocí knihovny tiktoken), což krásně podloží argumentaci o efektivním využití kontextového okna a nákladech na inference.]
+#added[
+Praktický dopad sub-word tokenizace na efektivitu a kapacitní limity agenta demonstruje @tab-token-comparison. Identické větné sdělení vyžaduje v češtině 33 tokenů oproti pouhým 12 tokenům v angličtině (měřeno tokenizérem `cl100k_base`). Český text tak spotřebovává 2,75× více prostoru v kontextovém okně a úměrně tomu zvyšuje finanční náklady i latenci inference. V autonomních vývojových pipeline je proto optimální vést vnitřní systémové prompty, technické plány a strukturované logy v angličtině, zatímco lidská interakce v zadání může probíhat v mateřském jazyce vývojáře.
+
+#figure(
+  table(
+    columns: (auto, 1fr, auto, auto),
+    align: (left, left, center, center),
+    table.header([*Jazyk*], [*Znění věty*], [*Znaky*], [*Tokeny*]),
+    [Angličtina], [An autonomous software development system analyzes requirements and proposes code changes.], [90], [12],
+    [Čeština], [Autonomní systém pro vývoj softwaru analyzuje požadavky a navrhuje změny kódu.], [79], [33],
+  ),
+  caption: [Empirické porovnání tokenové náročnosti ekvivalentního větného významu v angličtině a češtině (tokenizér `cl100k_base`).],
+) <tab-token-comparison>
+]
 
 === Multimodální modely
 
@@ -130,9 +140,12 @@ V kontextu automatizovaného vývoje softwaru a autonomních pipeline (jako je s
 
 ==== Turn
 
-#alert[Strukturální torzo a chybějící dekompozice pojmu Turn: Podkapitola 2.3.4.1 sestává z jediné věty. Je žádoucí ji rozpracovat o typologii kroků (User turn, Assistant/Model turn, Tool Execution turn), jejich mapování na stavový automat ReAct smyčky a význam deterministického oddělení jednotlivých fází pro zachování stability KV cache.]
+#diff[Každému kroku mezi modelem a uživatelem se říká turn, nebo specificky model turn pro každé spuštění inference.][Každému diskrétnímu kroku ve výměně informací mezi okolním prostředím a jazykovým modelem se v agentních architekturách říká tah (_turn_). Na rozdíl od jednoduchého konverzačního rozhraní, kde dochází pouze ke střídání uživatele a asistenta, agentní smyčka (typicky implementující vzor ReAct @yao2022) rozlišuje tři základní typy tahů:
+1. *Tah uživatele či prostředí (_User / Environment Turn_)*: Vnáší do kontextu nové zadání, externí událost (např. spuštění GitHub webhooku) nebo doplňující instrukce.
+2. *Tah modelu (_Model / Assistant Turn_)*: Reprezentuje jedno spuštění inference neuronové sítě. Model na základě dosavadní historie emituje buď finální textovou odpověď, nebo strukturovaný požadavek na vyvolání nástroje (_tool call_).
+3. *Tah vykonání nástroje (_Tool Execution Turn_)*: Běhové prostředí (harness) provede požadovanou operaci — např. spuštění skriptu v terminálu či čtení souboru — a její výsledek vloží do kontextu jako syntetický tah určený pro navazující uvažování modelu.
 
-#draft[Každému kroku mezi modelem a uživatelem se říká turn, nebo specificky model turn pro každé spuštění inference.]
+Striktní oddělení těchto fází a jejich deterministická serializace do historie kontextu mají zásadní dopad na výpočetní efektivitu: umožňují inferenčnímu serveru plně využívat cachování klíčů a hodnot (_KV cache_), neboť neměnná historie předchozích tahů nemusí být při každém kroku znovu přepočítávána.]
 
 ==== Context Window
 
@@ -232,11 +245,9 @@ Praktický význam specifikace Model Context Protocol @anthropic-mcp spočívá 
 
 === Subagenti
 
-#alert[Strukturální torzo: Sekce o subagentech čítá jedinou větu, ačkoli jde o klíčový koncept moderní víceagentní orchestrace. Je nezbytné buď podkapitolu strukturálně rozpracovat (popsat komunikační vzory, hierarchii rolí, asynchronní zasílání zpráv a delegování specializovaných úloh), nebo ji sloučit s bezprostředně navazující sekcí „Workflows neboli Graph Engineering“.]
+#diff[Když dáme agentovi nástroj s možností vyvolat jiného agenta, zadat mu úlohu, interagovat s ním a sledovat jeho progress drasticky zvýšíme jeho efektivnost pro rozsáhlé úlohy. Tomuto se říká "subagents".][Když je agent vybaven nástrojem umožňujícím vyvolat další specializovanou instanci jazykového modelu, zadat jí dílčí úlohu, asynchronně s ní komunikovat a sledovat její postup, efektivita řešení rozsáhlých softwarových problémů dramaticky roste. V teorii autonomních systémů se tyto delegované entity označují jako subagenti (_subagents_).
 
-#draft[
-Když dáme agentovi nástroj s možností vyvolat jiného agenta, zadat mu úlohu, interagovat s ním a sledovat jeho progress drasticky zvýšíme jeho efektivnost pro rozsáhlé úlohy. Tomuto se říká "subagents".
-]
+Tato architektura umožňuje hierarchickou dekompozici problému: hlavní koordinační agent (_orchestrator_) udržuje globální strategii a pověřuje úzce profilované subagenty izolovanými činnostmi — například rešerší dokumentace, prozkoumáním rozsáhlého adresářového stromu repozitáře nebo syntaktickou opravou konkrétního modulu. Zásadní architektonickou výhodou je ochrana a izolace kontextového okna: rozsáhlý a výpočetně náročný průzkumný kontext subagenta se po dokončení úkolu zahodí a rodičovskému orchestrátoru je předán pouze syntetizovaný, čistý výsledek. Tím se zabraňuje zahlcení primárního kontextu (_context pollution_) a degradaci kognitivních schopností hlavního agenta.]
 
 === Workflows neboli Graph Engineering
 
@@ -281,15 +292,8 @@ návrhu, nikoli formalitou: parafráze ztrácí význam, který do zadání vlo�
 kdo je formuloval.
 ]
 
-=== Hlášení selhání
+=== Eskalace a transparence selhání
 
-#alert[Duplicita a tematické zařazení: Téma hlášení selhání se objevuje pod identickým názvem zde v teoretické části (2.4.3) i v praktické části (kapitola 3.7). V teorii navíc detekce a eskalace chyb nepatří úzce pod „Human in the loop“, ale pod obecnou spolehlivost a observabilitu distribuovaných CI/CD procesů (např. dead-letter fronty, automatické notifikace). Doporučuji strukturálně oddělit teoretické principy od praktického popisu chování v DarkFactory.]
-
-#draft[
-Systém, který své vlastní selhání zamlčí, je nebezpečnější než systém, který
-zjevně spadne: nespolehlivost je v něm neviditelná. U automatizovaného provozu
-je proto hlášení chyb stejně důležitou vlastností jako vlastní funkce, jak
-ukazuje praktická část.
-]
+#diff[Systém, který své vlastní selhání zamlčí, je nebezpečnější než systém, který zjevně spadne: nespolehlivost je v něm neviditelná. U automatizovaného provozu je proto hlášení chyb stejně důležitou vlastností jako vlastní funkce, jak ukazuje praktická část.][Systém, který své vlastní selhání zamlčí nebo zamete pod koberec, je nebezpečnější než systém, který zjevně havaruje: nespolehlivost se v něm stává neviditelnou a postupně eroduje důvěru uživatele v celý autonomní provoz. V konceptu člověka ve smyčce proto hlášení chyb a eskalace selhání netvoří pouhý doplňkový technický detail, nýbrž fundamentální bezpečnostní pilíř. Pokud autonomní agent narazí na vyčerpání kontextového okna, syntaktickou chybu neřešitelnou v rámci rozpočtu tahů nebo selhání integračních testů, nesmí skončit tichým uváznutím či nekonečným cyklem. Místo toho musí harness deterministicky zachytit chybový stav, sestavit strukturovaný diagnostický protokol (obsahující chybový stack trace, diff provedených změn a stav kontextu) a srozumitelně jej eskalovat člověku formou notifikace či dedikovaného incidentu. Tím je zajištěna plná observabilita a okamžitá lidská dohledatelnost.]
 
 

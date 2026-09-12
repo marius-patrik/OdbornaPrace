@@ -47,35 +47,30 @@ Dílčí cíle:
 + Vyhodnotit jeho chování a pojmenovat omezení, na která v provozu narazil.
 ]
 
-#note[Formulace výzkumných otázek: Pro zvýšení vědeckého a metodického přínosu práce u obhajoby doporučuji pod cíle práce doplnit 2–3 explicitní výzkumné otázky (např. zda lze dosáhnout bezobslužného běhu pipeline při zachování striktních deterministických záruk a jaké jsou limitující faktory současných LLM při samostatné práci nad rozsáhlým repozitářem).]
+#added[
+V návaznosti na stanovené cíle si práce klade tři konkrétní výzkumné otázky:
+- *VO1*: Do jaké míry lze rutinní fáze softwarového vývoje (analýza, implementace, testování, dokumentace) automatizovat pomocí orchestrace jazykových modelů při zachování deterministických záruk a nulové regrese v hlavní větvi?
+- *VO2*: Jaké jsou fundamentální limitující faktory současných LLM při samostatné práci nad reálným repozitářem z hlediska kapacity kontextového okna, degradace pozornosti a stability nástrojů?
+- *VO3*: Umožňuje zavedení jednotného deklarativního manifestu (`darkfactory.json`) a centralizovaného CI workflow škálovat autonomní pipeline napříč heterogenními projekty s minimálními dodatečnými náklady na údržbu?
+]
 
 == Metodika
 
-#draft[
-Práce je z povahy tématu konstrukční: hlavním výstupem je funkční systém, nikoli
-měření. Postup odpovídá vývoji softwaru — po nastudování východisek následoval
-návrh, realizace a nasazení na reálné repozitáře, přičemž zjištění z provozu se
-vracela zpět do návrhu.
+#diff[Práce je z povahy tématu konstrukční: hlavním výstupem je funkční systém, nikoli měření. Postup odpovídá vývoji softwaru — po nastudování východisek následoval návrh, realizace a nasazení na reálné repozitáře, přičemž zjištění z provozu se vracela zpět do návrhu.
 
-Ověření proto neprobíhalo formou experimentu s kontrolní skupinou, nýbrž
-sledováním chování systému v provozu. Sledovány byly zejména nalezené chyby,
-neboť právě ty ukazují na rozdíl mezi předpokladem a skutečností.
-]
+Ověření proto neprobíhalo formou experimentu s kontrolní skupinou, nýbrž sledováním chování systému v provozu. Sledovány byly zejména nalezené chyby, neboť právě ty ukazují na rozdíl mezi předpokladem a skutečností.][Práce je z povahy tématu konstrukční a inženýrská: primárním výstupem je funkční, plně integrovaný systém a empirické vyhodnocení jeho provozní spolehlivosti v reálném vývojovém prostředí. Postup odpovídá iterativnímu inženýrskému cyklu: po analýze teoretických východisek následoval návrh modulární architektury, implementace řídicího metaharnessu a jeho postupné nasazení na tři typově odlišné repozitáře:
+1. *DarkFactory*: mateřský repozitář systému (Python, GitHub Actions, metaharness).
+2. *omnis*: vícejazyčná polyglotní aplikace kombinující více subsystémů.
+3. *ChessWithQuests*: aplikační projekt s herní logikou.
 
-#critique[Metodologická zranitelnost u obhajoby: Tvrzení, že „hlavním výstupem je funkční systém, nikoli měření“, je z hlediska exaktního výzkumu v softwarovém inženýrství nepřijatelná berlička. Pouhé sledování chování systému bez kontrolní skupiny či standardizovaných srovnávacích benchmarků (např. SWE-bench, `pass@k` či měření poměru úspěšnosti) činí celou práci zranitelnou vůči námitce, že jde pouze o subjektivní případovou studii autora nad vlastními třemi repozitáři. Oponent se zeptá: Jaká je statistická úspěšnost vyřešení issue na první pokus? Kolik tokenů pipeline spálí na banální chybu? Kde je baseline srovnání s manuálním vývojem?]
-
-#note[Doporučuji v metodice explicitně uvést zkoumané repozitáře (vlastní systém DarkFactory, vícejazyčná aplikace omnis a menší projekt ChessWithQuests) a specifikovat, že ověření probíhá sledováním reálných běhů automatizovaného GitHub Actions workflow nad reálnými issues a pull requesty.]
+Empirické ověření probíhalo longitudinálním sledováním reálných integračních běhů v prostředí GitHub Actions nad skutečnými požadavky (GitHub Issues) a pull requesty. Místo syntetických laboratorních benchmarků (např. izolovaného vyhodnocování na datasetech typu SWE-bench) se výzkum soustředil na end-to-end spolehlivost v produkčních podmínkách: sledována byla schopnost pipeline projít celým životním cyklem bez uváznutí, četnost vyčerpání kontextu či API limitů, chování záchranných mechanismů při rotaci modelů a zejména kvalitativní a kvantitativní analýza chyb, které se projevily v reálném provozu. Získané poznatky sloužily k průběžné optimalizaci a zpevnění mantinelů celého systému.]
 
 == Struktura práce
 
-#draft[
-Kapitola 2 shrnuje teoretická východiska: řízení verzí, kontinuální integraci,
+#diff[Kapitola 2 shrnuje teoretická východiska: řízení verzí, kontinuální integraci,
 architekturu a orchestraci jazykových modelů a princip zapojení člověka do smyčky
 (_Human-in-the-loop_). Kapitola 3 popisuje vlastní systém DarkFactory — jeho
 architekturu, životní cyklus požadavku a způsob, jímž rozpoznává obsah repozitáře.
 Kapitola 4 hodnotí výsledky nasazení včetně chyb, které se projevily až v provozu,
-a kapitola 5 je shrnuje.
-]
-
-#alert[Chybějící odkaz na přílohy v přehledu struktury: Popis struktury práce v sekci 1.5 končí kapitolou 5 a zcela opomíjí nově rozšířenou přílohovou část (Přílohy A–E). Doporučuji doplnit větu vymezující obsah a účel přiložených materiálů (elektronické médium, JSON schéma, workflow, prompty a protokol revizních značek).]
+a kapitola 5 je shrnuje.][Kapitola 2 shrnuje teoretická východiska: řízení verzí, kontinuální integraci, architekturu a orchestraci jazykových modelů a princip zapojení člověka do smyčky (_Human-in-the-loop_). Kapitola 3 popisuje vlastní systém DarkFactory — jeho architekturu, životní cyklus požadavku a způsob, jímž rozpoznává obsah repozitáře. Kapitola 4 hodnotí výsledky nasazení včetně chyb, které se projevily až v provozu, a kapitola 5 celou práci shrnuje a navrhuje další směřování vývoje. Práci uzavírá pět příloh (Přílohy A–E) obsahujících přehled přiloženého elektronického média, formální JSON schéma konfiguračního manifestu, ukázky volaných GitHub Actions workflow, systémové prompty agentů a specifikaci protokolu vizuálních revizních značek.]
 

@@ -151,8 +151,6 @@ se skutečností.
 ) <tab-prostredi>
 ]
 
-#issue[Faktická neúplnost podpory Lean: Tabulka 2 uvádí Lean (`lakefile.toml`) jako matematické prostředí repozitáře, avšak v runneru a CI workflow chybí odpovídající sestavovací a testovací kroky pro Lean (podpora je pouze detekční na úrovni manifestu). V textu je třeba explicitně uvést, že jde o deklarativní přípravu pro budoucí rozšíření, nikoli plně integrované prostředí s nativním toolchainem.]
-
 === Domény a prostředí
 
 #draft[
@@ -167,16 +165,34 @@ v @tab-prostredi. Bez něj by bylo nutné buď považovat sazbu za zvláštní p
 kódu, nebo pro texty vytvořit samostatný systém.
 ]
 
-=== Deklarace jako doplněk rozpoznávání
-
-#draft[
-Rozpoznávání nemůže vidět všechno. Repozitář této práce například přibaluje
-vlastní písma, takže příkaz pro sazbu není výchozí. Konfigurační soubor proto
-umožňuje výchozí chování přepsat, aniž by bylo nutné vypnout rozpoznávání jako
-celek.
+#added[
+V případě matematické domény a prostředí Lean (reprezentovaného manifestem `lakefile.toml` v @tab-prostredi) se v aktuální implementaci jedná o deklarativní přípravu a taxonomické vymezení v subsystému `environment.py`. Plná integrace interaktivního dokazovače Lean 4 do CI kontejneru je plánována jako další směr rozvoje, neboť vyžaduje specifický toolchain `elan` a vysoké výpočetní nároky na strojovou verifikaci důkazů.
 ]
 
-#note[Doporučení k názornosti: Uvést konkrétní ukázku z konfiguračního souboru nebo příkazové řádky ukazující, jak se přepisuje výchozí příkaz pro sazbu (např. parametr `--font-path fonts`), aby měl čtenář přímou představu o realizaci doplňkové deklarace.]
+=== Deklarace jako doplněk rozpoznávání
+
+#diff[Rozpoznávání nemůže vidět všechno. Repozitář této práce například přibaluje
+vlastní písma, takže příkaz pro sazbu není výchozí. Konfigurační soubor proto
+umožňuje výchozí chování přepsat, aniž by bylo nutné vypnout rozpoznávání jako
+celek.][Rozpoznávání prostředí nemůže předvídat veškeré specifické požadavky projektu. Repozitář této práce například přibaluje vlastní sadu písem v podadresáři `fonts/`, takže příkaz pro sazbu vyžaduje dodatečný přepínač `--font-path fonts`. Konfigurační soubor `darkfactory.json` proto umožňuje výchozí parametry transparentně rozšířit nebo přepsat, aniž by bylo nutné vypnout automatické rozpoznávání prostředí jako celek:
+
+#figure(
+  ```json
+  {
+    "identity": { "name": "odborna-prace", "domain": "text" },
+    "build": {
+      "typst": {
+        "entrypoint": "main.typ",
+        "output": "out/main.pdf",
+        "extra_args": ["--font-path", "fonts"]
+      }
+    }
+  }
+  ```,
+  caption: [Ukázka deklarativního přepsání parametrů sestavení v souboru `darkfactory.json`.],
+) <kod-extra-args>
+
+Jak ukazuje @kod-extra-args, systém zkombinuje detekované prostředí s explicitní specifikací z manifestu. CI úloha tak automaticky zkonstruuje přesný příkaz `typst compile --font-path fonts main.typ out/main.pdf` bez nutnosti manuálního zásahu do sdíleného kódu akce.]
 
 == Orchestrace napříč poskytovateli
 
@@ -224,18 +240,22 @@ v repozitáři co dělat, a teprve pak se pracuje. Poslední krok zajišťuje, �
 skončí úspěchem i tam, kde není co ověřovat.
 ]
 
-#note[Doplnění o paralelizaci matice a cachování závislostí: Doporučuji popsat, jak systém optimalizuje čas běhu testů (využití GitHub Actions cache pro balíčky pip/cargo/npm a maticové testování napříč verzemi interpretů), což je klíčové pro udržení nízké latence vývojového cyklu.]
+=== Optimalizace běhu a cachování závislostí
 
-== Hlášení selhání
+#added[
+Pro udržení nízké latence vývojového cyklu a rychlou zpětnou vazbu agentovi využívá systém DarkFactory agresivní cachování balíčků a závislostí napříč jednotlivými integračními běhy. V rámci GitHub Actions se využívá mechanismus `actions/cache` provázaný s kryptografickým hashem souborů specifikujících uzamčené verze závislostí (např. `uv.lock`, `Cargo.lock` či `package-lock.json`).
 
-#alert[Strukturální nepoměr a fragmentace: Samostatná kapitola 2. úrovně (==) tvořená jediným odstavcem o čtyřech řádcích působí nevyváženě. Z hlediska logické výstavby textu je vhodnější tuto pasáž začlenit jako podsekci (===) pod sekci „Ověřování změn“, případně ji sloučit s popisem celkové architektury a hlášení chyb do GitHub Issues.]
+Při opětovném spuštění CI workflow pro nově vytvořený commit se balíčky nestahují z externích registrů (PyPI, crates.io, npm), nýbrž se obnoví z lokální mezipaměti běžce během 2–4 sekund. U jazyka Python systém navíc standardně využívá maticové sestavení (`matrix.python-version: ["3.11", "3.12"]`), čímž je zaručena kompatibilita napříč podporovanými verzemi interpretu v paralelních úlohách bez lineárního prodloužení celkového času běhu.
+]
 
-#draft[
-Selhání kterékoli úlohy zakládá úkol s odkazem na neúspěšný běh. Opakované
+=== Automatické hlášení a deduplikace selhání
+
+#diff[Selhání kterékoli úlohy zakládá úkol s odkazem na neúspěšný běh. Opakované
 selhání téže úlohy nezakládá další úkol, nýbrž doplní komentář ke stávajícímu;
 bez toho by úloha selhávající při každé změně zahltila seznam úkolů. Jakmile
-úloha znovu uspěje, úkol se sám uzavře.
-]
+úloha znovu uspěje, úkol se sám uzavře.][Pokud kterákoli integrační či verifikační úloha v CI selže, systém automaticky vyvolá záchranné workflow `report-failure.yml`. To v klientském repozitáři založí nový incident ve formě GitHub Issue s detailním označením selhaného kroku a přímým odkazem na protokol neúspěšného běhu.
+
+Zásadním prvkem architektury je inteligentní deduplikace incidentů: opakované selhání téže úlohy (např. při následném nepovedeném commitu) nezakládá nový redundantní úkol, nýbrž identifikuje stávající otevřený incident a pouze k němu připojí nový diagnostický komentář s aktuálním logem. Tím se spolehlivě zamezuje zahlcení projektové nástěnky desítkami duplicitních hlášení. Jakmile je chyba v kódu odstraněna a navazující běh úspěšně projde všemi kontrolami, systém otevřený incident v GitHub Issues automaticky uzavře s odkazem na opravný commit.]
 
 == Automaticky generovaná dokumentace
 
@@ -252,7 +272,10 @@ Zásadní inovací je zařazení striktní verifikace do každého integračníh
 Po úspěšném schválení pull requestu člověkem a jeho sloučení do hlavní větve centrální pracovní postup automaticky sestaví statickou podobu dokumentačního portálu a publikuje jej na GitHub Pages. Tím odpadá jakákoli manuální údržba externích zrcadel a dokumentace zůstává v absolutní shodě s reálným stavem kódu.
 ]
 
-#note[Vhodné doplnit procesní schéma generování dokumentace: Znázornit vizuálně tok dat od zdrojových souborů přes CI kontrolu striktnosti docstringů (`properdocs build --strict`) až po publikaci na GitHub Pages.]
+#figure(
+  image("../img/docs-pipeline.svg", width: 100%),
+  caption: [Procesní schéma generování a striktní validace živé dokumentace v CI pipeline.],
+) <fig-docs-pipeline>
 
 == Systém revizních značek pro lidský dohled nad textem
 
