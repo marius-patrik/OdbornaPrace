@@ -11,10 +11,10 @@ permissions:
 
 jobs:
   deploy-docs:
-    uses: marius-patrik/DarkFactory/.github/workflows/deploy-docs.yml@f758971e77cdbb6ba5f2dbdbba3146c7f77b4e8d
+    uses: marius-patrik/DarkFactory/.github/workflows/deploy-docs.yml@1e6bdb0e060ea8dbf614bbec1d1fa7b9f3650228
     # Pinned so the shared scripts are checked out; without a ref the job looks for them
     # in this repository, which carries none of the pipeline.
     with:
       pipeline-repo: marius-patrik/DarkFactory
-      pipeline-ref: "f758971e77cdbb6ba5f2dbdbba3146c7f77b4e8d"
+      pipeline-ref: "1e6bdb0e060ea8dbf614bbec1d1fa7b9f3650228"
     secrets: inherit
