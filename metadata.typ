@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 
 #let meta = (
-  nazev: "Autonomní pipeline pro vývoj softwaru",
+  nazev: "Úvod do agentického AI a design autonomní pipeline pro softwarový vývoj",
   podnazev: "Návrh a realizace systému DarkFactory",
 
   autor: "Patrik Marius",

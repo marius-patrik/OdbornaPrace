@@ -1,4 +1,4 @@
-# Odborná práce — Autonomní pipeline pro vývoj softwaru
+# Odborná práce — Úvod do agentického AI a design autonomní pipeline pro softwarový vývoj
 
 > Odborná práce na Gymnáziu J. K. Tyla. Autor: **Patrik Marius**, 4.D.
 > Vedoucí práce: **Michal Dočekal**. Rok: **2026**.

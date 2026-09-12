@@ -50,7 +50,31 @@
 
 #let struct-alert = alert
 
-#let ai(body) = highlight(fill: rgb("fef08a"))[#body]
+#let critique(body) = block(
+  fill: rgb("fff7ed"),
+  stroke: (left: 3pt + rgb("ea580c")),
+  inset: (x: 10pt, y: 8pt),
+  radius: (right: 4pt),
+  width: 100%,
+  text(fill: rgb("9a3412"), size: 10.5pt)[🔥 *Hloubková kritika / Oponentura:* #body]
+)
+
+// Zelené zvýraznění pro nově přidaný text (nahrazuje původní koncept ai)
+#let added(body) = highlight(fill: rgb("bbf7d0"))[#body]
+#let ai = added
+
+// Žluté zvýraznění pro neověřený text konceptu (draft)
+#let draft(body) = highlight(fill: rgb("fef08a"))[#body]
+#let unconfirmed = draft
+
+// Modré zvýraznění pro uživatelem potvrzený, avšak nefinalizovaný text (confirmed)
+#let confirmed(body) = highlight(fill: rgb("bfdbfe"))[#body]
+
+// Červené zvýraznění s přeškrtnutím pro odstraněný text (removed)
+#let removed(body) = highlight(fill: rgb("fee2e2"))[#strike(stroke: 0.8pt + rgb("ef4444"))[#body]]
+
+// Srovnávací diff funkce (původní červený + nový zelený text)
+#let diff(old, new) = [#removed(old) #added(new)]
 
 #let titulni-list(meta, logo: none) = {
   set align(center)
@@ -200,7 +224,21 @@
 
   // Popisky součástí textu: stejné písmo jako text, velikost 10 b.
   show figure.caption: set text(size: 10pt)
-  show raw: set text(font: "DejaVu Sans Mono", size: 10pt)
+  show raw: set text(font: ("DejaVu Sans Mono", "Courier New"), size: 9.5pt)
+  show raw.where(block: true): it => block(
+    fill: rgb("#f8fafc"),
+    stroke: 0.5pt + rgb("#cbd5e1"),
+    inset: (x: 10pt, y: 8pt),
+    radius: 4pt,
+    width: 100%,
+    it,
+  )
+  show raw.where(block: false): it => box(
+    fill: rgb("#f1f5f9"),
+    inset: (x: 3pt, y: 1pt),
+    radius: 2pt,
+    it,
+  )
   show link: set text(fill: rgb("#0b4f9e"))
   set table(stroke: 0.5pt)
   set figure(numbering: "1")

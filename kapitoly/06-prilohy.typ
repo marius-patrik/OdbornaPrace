@@ -1,17 +1,19 @@
-#import "../lib/odborna-prace.typ": note, issue, alert
-
-#let ai(body) = highlight(fill: yellow, body)
+#import "../lib/odborna-prace.typ": note, issue, alert, critique, added, draft, confirmed, diff
 
 #alert[Nevyvážený rozsah a obsah příloh: Přílohy práce jsou silně redukovány (pouze 2 položky, z nichž jedna duplikuje konfiguraci z kapitoly 3). Pro odbornou práci tohoto typu je žádoucí rozšířit přílohovou část o: A) Obsah přiloženého média, B) Kompletní JSON schéma souboru `darkfactory.json`, C) Ukázku volaného sdíleného GitHub Actions workflow a D) Systémový prompt použitý pro plánovacího a kódovacího agenta.]
 
 = Obsah přiloženého média
 
+#draft[
 Odevzdaný archiv obsahuje zdrojové soubory této práce a odkaz na veřejný
 repozitář se zdrojovým kódem systému DarkFactory.
+]
 
 = Referenční specifikace konfiguračního souboru
 
+#draft[
 Tato příloha uvádí kompletní referenční strukturu konfiguračního manifestu `darkfactory.json`. Soubor slouží jako jediný zdroj pravdy pro chování sdíleného vývojového pipeline a parametrizaci agentů v cílovém repozitáři.
+]
 
 #figure(
   ```json
@@ -98,6 +100,7 @@ Tato příloha uvádí kompletní referenční strukturu konfiguračního manife
   caption: [Úplná referenční specifikace konfiguračního souboru `darkfactory.json` vymezující identitu, doménové oblasti, ochranu větví a parametry prostředí.],
 ) <kod-full-manifest>
 
+#draft[
 Jednotlivé sekce plní tyto systémové role:
 - *identity*: Vymezuje vlastníka, název repozitáře, výchozí větev a identifikátor bota (`agent_slug`), podle něhož agent rozpoznává a filtruje vlastní komentáře v diskusních vláknech.
 - *versioning*: Řídí sémantické verzování (SemVer) a automatické generování changelogu při vydání nové verze.
@@ -106,29 +109,34 @@ Jednotlivé sekce plní tyto systémové role:
 - *required_checks*: Deklarace stavových kontrol, které musí úspěšně skončit před povolením sloučení pull requestu (ochrana proti uváznutí na přeskočených kontrolách).
 - *environment*: Pravidla rozpoznávání prostředí v repozitáři podle manifestních souborů s možností explicitního přepsání verzí nástrojů.
 - *upstream*: Zajišťuje připnutí sdíleného workflow ke konkrétní verzi či commitu upstream repozitáře, což brání nechtěným rozpadům při aktualizacích.
+]
 
 = Protokol revizních značek v sazebním systému Typst
 
+#draft[
 Tato příloha uvádí referenční definici a použití vizuálních revizních značek pro řízení a dohled nad generovaným textem v ekosystému DarkFactory.
+]
 
 #figure(
   ```typ
-  #import "lib/odborna-prace.typ": ai, note, issue, alert
+  #import "lib/odborna-prace.typ": note, issue, alert, critique, added, draft, confirmed, diff
 
-  // 1. Návrh agenta čekající na autorské posouzení:
-  #ai[Tento odstavec navrhl autonomní model v rámci řešení požadavku.]
-
-  // 2. Návrh na věcné či stylistické vylepšení:
+  // --- 1. Panely na okraji textu (Callouty) ---
   #note[Doplňte porovnání rychlosti kompilace mezi verzemi 0.1 a 0.2.]
+  #issue[Chybná signatura funkce: chybí povinný parametr timeout.]
+  #alert[Sekce postrádá shrnutí naměřených výsledků před diskusí.]
+  #critique[Metodologická absence baseline prokazující přínos nového modulu.]
 
-  // 3. Věcná nebo formální chyba vyžadující opravu:
-  #issue[Uvedená citace neodpovídá zdroji v souboru bib/references.bib.]
-
-  // 4. Strukturální upozornění na nevyváženost textu:
-  #alert[Kapitola postrádá shrnutí naměřených výsledků před diskusí.]
+  // --- 2. Textové revizní funkce (zvýraznění v toku textu) ---
+  #draft[Tento odstavec tvoří neověřený koncept čekající na schválení.]
+  #added[Nově vygenerovaná sekce automaticky začleněná agentem.]
+  #confirmed[Uživatelem zkontrolovaný text, který ještě nebyl finalizován.]
+  #diff[Původní chybné znění textu.][Nové opravené znění textu po revizi.]
   ```,
-  caption: [Ukázka zápisu a použití revizních značek v jazyce Typst.],
+  caption: [Ukázka zápisu a použití revizních značek a textových funkcí v jazyce Typst.],
 ) <kod-znacky-typst>
 
-Každá značka plní jasnou komunikační roli v procesu lidského schvalování: zatímco finální text zůstává zcela bez značek, neověřené pasáže jsou okamžitě patrné díky žlutému zvýraznění a náměty či chyby jsou separovány do barevných panelů na okraji textu.
+#draft[
+Každá značka plní přesně vymezenou komunikační roli v procesu lidského schvalování: zatímco finální text zůstává zcela bez zvýraznění, veškeré neověřené pasáže konceptu jsou zřetelně žluté (`#draft`), nově přidané části zelené (`#added`), potvrzené části modré (`#confirmed`) a opravy zviditelněné přes srovnávací diff (`#diff`). Náměty, chyby, strukturální vady i břitká kritika jsou navíc striktně separovány do barevných postranních panelů na okraji textu.
+]
 
