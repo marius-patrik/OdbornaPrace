@@ -131,12 +131,36 @@ Tato příloha uvádí referenční definici a použití vizuálních revizních
   #draft[Tento odstavec tvoří neověřený koncept čekající na schválení.]
   #added[Nově vygenerovaná sekce automaticky začleněná agentem.]
   #confirmed[Uživatelem zkontrolovaný text, který ještě nebyl finalizován.]
+  #removed[Zastaralý text navržený k odstranění.]
   #diff[Původní chybné znění textu.][Nové opravené znění textu po revizi.]
   ```,
   caption: [Ukázka zápisu a použití revizních značek a textových funkcí v jazyce Typst.],
 ) <kod-znacky-typst>
 
 #draft[
+== Vizuální reprezentace jednotlivých prvků v sazbě
+
+Pro přehlednost jsou níže uvedeny reálné ukázky jednotlivých revizních panelů a textových funkcí v jejich finální vizuální podobě:
+]
+
+#note[Ukázka zeleného panelu doporučení (`#note`): Konstruktivní návrh na vylepšení, doplnění diagramu nebo námět na architektonickou optimalizaci.]
+
+#issue[Ukázka červeného panelu vady (`#issue`): Zjištěná faktická nesrovnalost, logická mezera, syntaktická chyba či překlep vyžadující opravu.]
+
+#alert[Ukázka žlutého panelu strukturálního upozornění (`#alert` / `#struct-alert`): Hloubková nevyváženost podkapitol, nekonzistence osnovy či absence klíčových náležitostí práce.]
+
+#critique[Ukázka oranžového panelu oponentury (`#critique`): Břitká, nekompromisní oponentura — zpochybnění neověřených předpokladů, analýza slabin metodiky a příprava na otázky zkušební komise.]
+
+Ukázky textových zvýrazňovacích a srovnávacích funkcí v toku odstavce:
+- *Neověřený koncept (`#draft` / `#unconfirmed`)*: #draft[Tento text představuje koncept čekající na posouzení autorem.]
+- *Nově přidaný text (`#added`)*: #added[Tato pasáž byla nově vygenerována autonomním agentem na základě požadavku.]
+- *Potvrzený text (`#confirmed`)*: #confirmed[Text byl předběžně odsouhlasen uživatelem, čeká na finální začištění.]
+- *Navrženo k odstranění (`#removed`)*: #removed[Tato neaktuální věta je navržena k úplnému smazání z rukopisu.]
+- *Srovnávací diff (`#diff`)*: #diff[Původní chybné nebo nepřesné znění pasáže.][Nové přesné, fakticky a formálně ověřené znění pasáže.]
+- *Čistý neoznačený text*: Představuje finální, autorsky schválený text v hlase autora bez jakéhokoliv podbarvení.
+
+#draft[
 Každá značka plní přesně vymezenou komunikační roli v procesu lidského schvalování: zatímco finální text zůstává zcela bez zvýraznění, veškeré neověřené pasáže konceptu jsou zřetelně žluté (`#draft`), nově přidané části zelené (`#added`), potvrzené části modré (`#confirmed`) a opravy zviditelněné přes srovnávací diff (`#diff`). Náměty, chyby, strukturální vady i břitká kritika jsou navíc striktně separovány do barevných postranních panelů na okraji textu.
 ]
+
 
