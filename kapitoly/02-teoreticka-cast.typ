@@ -171,7 +171,7 @@ _Prompt engineering_ (inženýrství promptů) je disciplína zaměřená na sys
 
 === Agent vs Chatbot
 
-#diff[Rozdíl mezi chatbotem a agentem je v principu, že chatbot je schopný pouze textu v konverzaci AKA chatu, agent se z něj stáva ve chvilí kdy je schopný dělat více než to, tedy když mu přidáme nástroje, se kterými může například prohledávat web, upravovat soubory nebo i přímo ovládat váš počítač.][Fundamentální rozdíl mezi chatbotem a agentem spočívá v rozsahu interakce s okolním světem: zatímco chatbot operuje výhradně v uzavřeném konverzačním rozhraní a generuje textové odpovědi, agentem se systém stává ve chvíli, kdy je vybaven sadou výkonných nástrojů (_tools_). Prostřednictvím nich dokáže aktivně zkoumat repozitář, vyhledávat informace na webu, modifikovat soubory a autonomně vykonávat příkazy v cílovém výpočetním prostředí.]
+#confirmed[Fundamentální rozdíl mezi chatbotem a agentem spočívá v rozsahu interakce s okolním světem: zatímco chatbot operuje výhradně v uzavřeném konverzačním rozhraní a generuje textové odpovědi, agentem se systém stává ve chvíli, kdy je vybaven sadou výkonných nástrojů (_tools_). Prostřednictvím nich dokáže aktivně zkoumat repozitář, vyhledávat informace na webu, modifikovat soubory a autonomně vykonávat příkazy v cílovém výpočetním prostředí.]
 
 === Harness a System Prompt
 
