@@ -18,21 +18,23 @@
     <practical-first>,
   )
 
+  // Paragraph spacing is 19.7pt; every heading-to-body gap is larger.
+  // Retain sticky heading blocks and the intentional page-break policy.
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
-    block(above: 21pt, below: 10pt, sticky: true, text(size: 16pt, weight: "bold", it))
+    block(above: 21pt, below: 30pt, sticky: true, text(size: 16pt, weight: "bold", it))
   }
 
   show heading.where(level: 2): it => {
     if it.at("label", default: none) not in inline-openers {
       pagebreak()
     }
-    block(above: 19pt, below: 9pt, sticky: true, text(size: 14pt, weight: "bold", it))
+    block(above: 19pt, below: 28pt, sticky: true, text(size: 14pt, weight: "bold", it))
   }
 
   show heading.where(level: 3): it => block(
     above: 17pt,
-    below: 8pt,
+    below: 26pt,
     sticky: true,
     text(size: 12pt, weight: "bold", it),
   )

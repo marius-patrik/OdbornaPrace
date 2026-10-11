@@ -11,5 +11,3 @@ Po vymezení architektury dostal stejný agent roli orchestrátora. Místo toho,
 Počáteční rozsah byl záměrně omezen na nejmenší uzavřený proces, který dokáže přijmout požadavek, předat práci agentovi a vrátit výsledek do řízeného procesu na GitHubu. Smyslem bylo co nejrychleji dosáhnout funkčního základu, který už může podporovat vlastní další vývoj.
 
 Před vznikem této základní verze musel člověk agenta spouštět a řídit přímo. Po dokončení základního cyklu už DarkFactory dokáže stejné nástroje spouštět sama nad vlastním repozitářem @darkfactory-d576ec8f. Další funkce tak mohou vznikat postupně prostřednictvím stejného procesu.
-
-Tento způsob vzniku sám o sobě nedokazuje vyšší kvalitu agentem vytvořeného softwaru. Ukazuje však, že principy plánování, orchestrace a delegace použité uvnitř DarkFactory byly použity už při vzniku její první funkční podoby.

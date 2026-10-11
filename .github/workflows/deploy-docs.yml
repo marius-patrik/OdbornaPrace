@@ -7,16 +7,18 @@ on:
         type: string
         required: true
 
-permissions:
-  contents: write
-
+# This site is published exclusively from an immutable GitHub Release asset,
+# never from an independently rebuilt PDF or a gh-pages branch.
 concurrency:
   group: odbornaprace-pages
   cancel-in-progress: false
 
 jobs:
-  pages:
+  build:
+    name: Assemble released PDF reader
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -41,10 +43,23 @@ jobs:
           test -s site/reader.mjs
           grep -q "reader.mjs" site/index.html
           if grep -q "<iframe" site/index.html; then echo "native PDF iframe must not be used" >&2; exit 1; fi
-      - name: Publish GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          branch: gh-pages
-          folder: site
-          clean: true
-          commit-message: "docs: publish PDF from release ${{ inputs.release_tag }}"
+          path: site
+
+  deploy:
+    name: Deploy PDF reader from Actions artifact
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy released paper
+        uses: actions/deploy-pages@v4
+        id: deployment
