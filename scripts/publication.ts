@@ -75,7 +75,7 @@ try {
   const htmlPath = join(temp, "publication.html");
   await run(["typst", "compile", "--features", "html", "--format", "html", "--font-path", FONTS, PAPER, htmlPath]);
   const html = await readFile(htmlPath, "utf8");
-  const body = html.match(/<body[^>]*>([\\s\\S]*?)<\\/body>/i)?.[1] ?? html;
+  const body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] ?? html;
   const turndown = new TurndownService({
     headingStyle: "atx",
     bulletListMarker: "-",
