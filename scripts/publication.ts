@@ -51,7 +51,9 @@ async function publicationHeader() {
     if (!match) throw new Error("Missing paper metadata field: " + key);
     return match[1];
   };
-  return `# ${field("title")}\n\n**${field("subtitle")}**\n\n${field("school")} · ${field("author")} · ${field("year")}\n\n`;
+  const year = source.match(/^\s*year:\s*(\d{4})/m)?.[1];
+  if (!year) throw new Error("Missing paper metadata field: year");
+  return `# ${field("title")}\n\n**${field("subtitle")}**\n\n${field("school")} · ${field("author")} · ${year}\n\n`;
 }
 
 async function validatePublication() {
