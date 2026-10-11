@@ -20,6 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
+      - name: Install pinned PDF.js dependency
+        run: bun install --frozen-lockfile
       - name: Download the exact released PDF
         env:
           GH_TOKEN: ${{ github.token }}
@@ -27,10 +29,18 @@ jobs:
         run: |
           mkdir -p release-artifacts
           gh release download "$PAPER_RELEASE_TAG" --pattern ODBORNA_PRACE.pdf --dir release-artifacts
-      - name: Build embedding-only publication site
+      - name: Build browser-rendered PDF.js publication site
         env:
           PAPER_RELEASE_TAG: ${{ inputs.release_tag }}
         run: bun scripts/site.ts
+      - name: Check the browser reader and released PDF
+        run: |
+          test -s site/ODBORNA_PRACE.pdf
+          test -s site/pdfjs/pdf.mjs
+          test -s site/pdfjs/pdf.worker.mjs
+          test -s site/reader.mjs
+          grep -q "reader.mjs" site/index.html
+          if grep -q "<iframe" site/index.html; then echo "native PDF iframe must not be used" >&2; exit 1; fi
       - name: Publish GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
