@@ -301,8 +301,6 @@ Počáteční rozsah byl záměrně omezen na nejmenší uzavřený proces, kter
 
 Před vznikem této základní verze musel člověk agenta spouštět a řídit přímo. Po dokončení základního cyklu už DarkFactory dokáže stejné nástroje spouštět sama nad vlastním repozitářem ([35](#loc-109)). Další funkce tak mohou vznikat postupně prostřednictvím stejného procesu.
 
-Tento způsob vzniku sám o sobě nedokazuje vyšší kvalitu agentem vytvořeného softwaru. Ukazuje však, že principy plánování, orchestrace a delegace použité uvnitř DarkFactory byly použity už při vzniku její první funkční podoby.
-
 ## 4 Zjištění a diskuse
 
 Výzkumná otázka se ptá, jaké principy se opakují v současném agentickém vývoji softwaru a jak je realizuje DarkFactory. Z analyzovaných zdrojů vystupuje společný vzor. Model pracuje uvnitř harnessu a širšího procesu, trvalý stav zůstává mimo jeho kontext, otevřený úsudek se odděluje od programově proveditelných kontrol a důležitá rozhodnutí zůstávají člověku ([10](#loc-84); [20](#loc-94); [26](#loc-100)).
