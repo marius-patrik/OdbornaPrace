@@ -24,8 +24,8 @@ async function validatePublication() {
     throw new Error("Typst output is not a PDF: " + PDF);
   }
   const markdown = await readFile(MARKDOWN, "utf8");
-  if (markdown.trim().length < 256 || !markdown.includes("Agentické inženýrství ve vývoji softwaru")) {
-    throw new Error("README.md does not contain the current paper title");
+  if (markdown.trim().length < 10240 || !markdown.includes("DarkFactory") || !markdown.includes("#")) {
+    throw new Error("README.md is unexpectedly short or missing thesis content");
   }
 }
 
