@@ -1,22 +1,13 @@
 {
-  "name": "darkfactory-paper",
+  "name": "odbornaprace",
   "private": true,
-  "version": "0.1.0",
   "type": "module",
-  "workspaces": [
-    "web"
-  ],
   "scripts": {
-    "dev": "bun scripts/watch.ts",
     "publication": "bun scripts/publication.ts",
-    "web:build": "bun run --cwd web build",
-    "web:check": "bun run --cwd web check",
-    "web:acceptance": "bun run --cwd web acceptance",
-    "build": "bun run publication && bun run web:build",
-    "check": "bun run publication && bun run web:check",
+    "build": "bun run publication",
     "site:assemble": "bun scripts/site.ts",
-    "site": "bun run build && bun run site:assemble",
-    "clean": "rm -rf site web/dist"
+    "site": "bun run site:assemble",
+    "clean": "rm -rf site release-artifacts"
   },
   "devDependencies": {
     "turndown": "7.2.4",

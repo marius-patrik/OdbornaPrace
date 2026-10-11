@@ -1,11 +1,7 @@
 site/
+release-artifacts/
 node_modules/
-web/node_modules/
-web/dist/
-web/package-lock.json
-
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
-

@@ -1,75 +1,91 @@
 name: Release
-
 on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       revision:
-        description: Exact 40-character commit SHA to release
-        required: true
+        description: Optional exact main commit SHA (defaults to current main)
         type: string
+        required: false
       tag:
-        description: Git tag to create for the release
-        required: true
+        description: Optional release tag (otherwise next patch version)
         type: string
+        required: false
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
-  group: release
+  group: canonical-paper-release
   cancel-in-progress: false
 
 jobs:
-  release:
-    name: exact-revision
+  gate:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.choose.outputs.publish }}
+      revision: ${{ steps.choose.outputs.revision }}
     steps:
-      - name: Validate requested revision
-        env:
-          REVISION: ${{ inputs.revision }}
-        run: |
-          if ! [[ "$REVISION" =~ ^[0-9a-fA-F]{40}$ ]]; then
-            echo "revision must be an exact 40-character commit SHA" >&2
-            exit 1
-          fi
-
-      - name: Checkout exact revision
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.revision }}
-          fetch-depth: 0
-          submodules: recursive
-
-      - name: Verify checkout identity
-        env:
-          REVISION: ${{ inputs.revision }}
-        run: test "$(git rev-parse HEAD)" = "${REVISION,,}"
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: Set up Typst
-        uses: typst-community/setup-typst@v5
-
-      - name: Install workspace dependencies
-        run: bun install
-
-      - name: Build canonical publication
-        run: bun run publication
-
-      - name: Verify release artifact set
-        run: |
-          for file in ODBORNA_PRACE.pdf README.md; do
-            test -s "$file" || { echo "missing release artifact: $file" >&2; exit 1; }
-          done
-
-      - name: Publish GitHub release
+      - id: choose
         env:
           GH_TOKEN: ${{ github.token }}
-          REVISION: ${{ inputs.revision }}
-          TAG: ${{ inputs.tag }}
+          REPOSITORY: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+          TESTED_REVISION: ${{ github.event.workflow_run.head_sha }}
+          MANUAL_REVISION: ${{ inputs.revision }}
         run: |
-          gh release create "$TAG" ODBORNA_PRACE.pdf README.md \
-            --target "$REVISION" \
-            --title "$TAG" \
-            --generate-notes
+          current="$(gh api "repos/$REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          revision="$current"
+          if [[ "$EVENT_NAME" == "workflow_run" ]]; then
+            revision="$TESTED_REVISION"
+          elif [[ -n "$MANUAL_REVISION" ]]; then
+            revision="$MANUAL_REVISION"
+          fi
+          if [[ "$current" != "$revision" ]]; then
+            echo "main advanced after CI (or manual revision is stale): skip release."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "publish=true" >> "$GITHUB_OUTPUT"
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: gate
+    if: needs.gate.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tested publication revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.gate.outputs.revision }}
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+      - uses: typst-community/setup-typst@v5
+      - run: bun install --frozen-lockfile
+      - name: Rebuild and verify checked-in publication matches the paper source
+        run: |
+          bun run publication
+          git diff --exit-code -- README.md ODBORNA_PRACE.pdf bun.lock
+      - name: Publish exact PDF/Markdown artifacts and dispatch Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVISION: ${{ needs.gate.outputs.revision }}
+          REQUEST_TAG: ${{ inputs.tag }}
+        run: |
+          if [[ -n "$REQUEST_TAG" ]]; then
+            TAG="$REQUEST_TAG"
+          else
+            PREVIOUS="$(gh release list --limit 100 --json tagName --jq '.[].tagName' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1 || true)"
+            if [[ -z "$PREVIOUS" ]]; then PREVIOUS="v0.0.0"; fi
+            VERSION="${PREVIOUS#v}"
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+            TAG="v${MAJOR}.${MINOR}.$((PATCH + 1))"
+          fi
+          echo "Publishing $TAG from $REVISION"
+          gh release create "$TAG" ODBORNA_PRACE.pdf README.md --target "$REVISION" --title "$TAG" --generate-notes
+          gh workflow run deploy-docs.yml --ref main -f release_tag="$TAG"

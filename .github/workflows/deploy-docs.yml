@@ -1,46 +1,40 @@
 name: Deploy Documentation
-
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Tag of the successfully published paper release
+        type: string
+        required: true
 
 permissions:
   contents: write
 
 concurrency:
-  group: pages
+  group: odbornaprace-pages
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: pages
+  pages:
     runs-on: ubuntu-latest
-    env:
-      PUBLIC_GITHUB_OAUTH_CLIENT_ID: ${{ vars.WORKBENCH_OAUTH_CLIENT_ID }}
-      PUBLIC_GITHUB_AUTH_BROKER_URL: ${{ vars.WORKBENCH_AUTH_BROKER_URL }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: Set up Typst
-        uses: typst-community/setup-typst@v5
-
-      - name: Install workspace dependencies
-        run: bun install
-
-      - name: Build canonical Pages site
-        run: bun run site
-
-      - name: Publish Pages branch
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Download the exact released PDF
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAPER_RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          mkdir -p release-artifacts
+          gh release download "$PAPER_RELEASE_TAG" --pattern ODBORNA_PRACE.pdf --dir release-artifacts
+      - name: Build embedding-only publication site
+        env:
+          PAPER_RELEASE_TAG: ${{ inputs.release_tag }}
+        run: bun scripts/site.ts
+      - name: Publish GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: site
           clean: true
-          commit-message: "docs: publish site from ${{ github.sha }}"
+          commit-message: "docs: publish PDF from release ${{ inputs.release_tag }}"
